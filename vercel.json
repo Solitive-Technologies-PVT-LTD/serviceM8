@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "buildCommand": "(npm ci || npm install) && npm run build",
+  "outputDirectory": "public",
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.7.0"
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/index.php" }
+  ]
+}
+
+
