@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\DocumentController;
+ use App\Http\Controllers\ServiceM8Controller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,7 +58,7 @@ Route::get('/sites', function () {
 
 Route::get('/dashboard/{site?}', function ($site = 1) {
     return view('dashboard', compact('site'));
-})->name('dashboard');
+})->name('sites');
 
 // Service Routes
 Route::get('/service/{id}', function ($id) {
@@ -89,3 +90,132 @@ Route::get('/site-documentation', function () {
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
+
+// ServiceM8 Testing Routes (for development/testing)
+
+Route::get('/', function () {
+    return redirect('/login');
+});
+
+Route::get('/forgot-password', function () {
+    return view('auth.passwords.reset');
+})->middleware('guest')->name('password.request');
+
+Auth::routes();
+Route::group(['middleware' => ['auth']], function() {
+    //Language Translation
+
+    
+
+Route::get('/documents/{folderId?}', [DocumentController::class, 'index'])
+    ->name('documents.index');
+
+Route::post('/documents/folder', [DocumentController::class, 'storeFolder'])
+    ->name('documents.folder.store');
+
+Route::delete('/documents/folder/{id}', [DocumentController::class, 'destroyFolder'])
+    ->name('documents.folder.delete');
+
+Route::post('/documents/file', [DocumentController::class, 'storeFile'])
+    ->name('documents.file.store');
+
+Route::get('/documents/file/{id}/download', [DocumentController::class, 'download'])
+    ->name('documents.file.download');
+
+Route::delete('/documents/file/{id}', [DocumentController::class, 'destroyFile'])
+    ->name('documents.file.delete');
+
+     Route::get('/','DashboardController@index')->name('dashboard-index');
+    Route::get('index/{locale}', 'HomeController@lang');
+    Route::get('/dashboard','DashboardController@index');
+    Route::post('/getDashboardData','DashboardController@dashboardAjax')->name('dashboard-data');
+    Route::group(['prefix' => 'settings'], function () {
+        Route::get('/','SettingsController@index')->name('dashboard');
+        Route::get('/setting-list','SettingsController@index');
+        Route::get('/setting-ajax-data','SettingsController@ajaxSettingData');
+        Route::get('/setting-create','SettingsController@create');
+        Route::post('/setting-store','SettingsController@store')->name('setting-save');
+        Route::get('/setting-show/{id}','SettingsController@show');
+        Route::get('/setting-edit/{id}','SettingsController@edit');
+        Route::post('/setting-update/{id}','SettingsController@update');
+        Route::post('/setting-delete','SettingsController@destroy');
+        Route::post('/get-settings-data','SettingsController@get_settings_data')->name('get-settings-data');
+    });
+    Route::group(['prefix' => 'permissions'], function () {
+        Route::get('/','PermissionController@index')->name('permissions');
+        Route::get('/permission-list','PermissionController@index');
+        Route::get('/permission-ajax-data','PermissionController@ajaxSettingData');
+        Route::get('/permission-create','PermissionController@create')->name('permission-create');
+        Route::post('/permission-store','PermissionController@store')->name('permission-save');
+        Route::get('/permission-show/{id}','PermissionController@show');
+        Route::get('/permission-edit/{id}','PermissionController@edit');
+        Route::post('/permission-update','PermissionController@update')->name('permission-update');
+        Route::post('/permission-delete','PermissionController@destroy');
+    });
+
+    Route::group(['prefix' => 'roles'], function () {
+        Route::get('/','RoleController@index')->name('roles');
+        Route::get('/role-list','RoleController@index');
+        Route::get('/role-ajax-data','RoleController@ajaxSettingData');
+        Route::get('/role-create','RoleController@create')->name('role-create');
+        Route::post('/role-store','RoleController@store')->name('role-save');
+        Route::get('/role-show/{id}','RoleController@show');
+        Route::get('/role-edit/{id}','RoleController@edit');
+        Route::post('/role-update','RoleController@update')->name('role-update');
+        Route::post('/role-delete','RoleController@destroy');
+    });
+    Route::get('menus/ajax', ['uses' => 'MenusController@ajaxMenusData', "as" => "menus.ajax_data"]);
+    Route::post('menus/update_menu_order', ['uses' => 'MenusController@updateMenuOrder', "as" => "menus.update_menu_order"]);
+    Route::resource('menus', 'MenusController');
+    Route::post('/destroy-menus','MenusController@destroyMenu');
+
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('/','UserController@index')->name('users');
+        Route::get('/getData','UserController@getData')->name('getUsersData');
+        Route::get('/create','UserController@create')->name('users-create');
+        Route::post('/save','UserController@save')->name('users-save');
+        Route::get('/edit/{id}','UserController@edit')->name('users-edit');
+        Route::post('/update','UserController@update')->name('users-update');
+        Route::post('/delete','UserController@delete')->name('users-delete');
+        Route::get('/assign/{id}','UserController@assign')->name('users-assign');
+        Route::post('/saveAssign','UserController@saveAssign')->name('users-saveAssign');
+    });
+
+ 
+   
+
+Route::prefix('servicem8')->as('servicem8.')->group(function () {
+
+        // Clients
+        Route::get('/clients', [ServiceM8Controller::class, 'clients'])
+            ->name('clients');
+
+        // Staff
+        Route::get('/staff', [ServiceM8Controller::class, 'staff'])
+            ->name('staff');
+
+        // Jobs
+        Route::get('/jobs', [ServiceM8Controller::class, 'jobs'])
+            ->name('jobs');
+
+        Route::get('/attachment/download/{uuid}', [ServiceM8Controller::class, 'downloadAttachment'])
+     ->name('attachment.download');
+        Route::get('/jobs/{uuid}', [ServiceM8Controller::class, 'showJob'])
+            ->name('jobs.show');
+
+        // Job attachments / documentation
+        Route::get('/jobs/{uuid}/attachments', [ServiceM8Controller::class, 'attachments'])
+            ->name('jobs.attachments');
+
+        // Quotes
+        Route::get('/quotes', [ServiceM8Controller::class, 'quotes'])
+            ->name('quotes');
+
+        // Invoices
+        Route::get('/invoices', [ServiceM8Controller::class, 'invoices'])
+            ->name('invoices');
+    });
+    Route::get('/company/{companyUuid}', [ServiceM8Controller::class, 'clientJobs'])
+    ->name('company.clientJobs');
+    
+});

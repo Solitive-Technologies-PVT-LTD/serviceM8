@@ -1,0 +1,311 @@
+/* Top section Css */
+.top_stats{
+    height:160px;
+    width:160px;
+}
+#total_calls_cnt{
+    border-style:solid;
+    border-radius:50%;
+    border-width:4px;
+    border-color:#299cdb;
+    width:150px;
+    height:150px;
+    margin-top:35px;
+}
+#live_calls_cnt{
+    border-style:solid;
+    border-radius:50%;
+    border-width:4px;
+    border-color:#299cdb;
+    width:150px;
+    height:150px;
+    margin-top:35px;
+}
+
+.call_cnt_content{
+    position: relative;
+    margin: auto;
+    margin-top: 35px;
+    height: 70px;
+    width: 70px;
+    text-align: center;
+}
+
+.img-30{
+    height:30px;
+    width:30px;
+}
+
+/* Day States Circles Old */
+.circles{
+    border-style:solid;
+    border-radius:50%;
+    border-width:4px;
+    border-color:#299cdb;
+    width:100px;
+    height:100px;
+    margin-top:0px;
+}
+.cnt_content{
+    position: relative;
+    margin: auto;
+    margin-top: 20px;
+    height: 80px;
+    width: 80px;
+    text-align: center;
+}
+.day_statcard1{
+    margin-top: -4px;;
+}
+
+/* //Live agents Stats circles */
+.agents_circles{
+    border-style:solid;
+    border-radius:50%;
+    border-width:3px;
+    border-color:#299cdb;
+    width:60px;
+    height:60px;
+    margin-top:10px;
+    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
+    -ms-border-radius:50%;
+    -o-border-radius:50%;
+}
+.agents_cnt_content{
+    position: relative;
+    margin: auto;
+    margin-top: 14px;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+}
+.agents_cnt_content h5{
+    margin-top: -5px;
+}
+
+/* Hourly Staffing starts */
+#houly_staffing_card{
+    height:206px;
+}
+
+#houly_staffing_avl_card{
+    margin-top: 14px !important;
+}
+#houly_staffing_sch_card{
+    margin-top: 20px !important;
+}
+
+#houly_staffing_avl_text{
+    font-size:10px;
+}
+#houly_staffing_sch_text{
+    font-size:10px;
+}
+/* Hourly Staffing Ends */
+#chart-doughnut div canvas{
+    top :-15px !important;
+}
+
+.call_states_name{
+    width: 45px;
+    color: black;
+    font-size: 8px;
+    margin-right: 2px;
+}
+
+.call_states_cnt{
+    width:40px;
+    color:black;
+    font-size:8px;
+}
+
+
+/* Loading Css */
+.circle {
+    /* width: 100px; */
+    padding:2px;
+    margin: 1px 1px 5px;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.dashboard-circle{
+    width:60px;
+    height:60px;
+    border-style:solid;
+    border-radius:50%;
+    border-width:6px;
+    border-color:cornflowerblue;
+}
+.dashboard-circle strong{
+    position: absolute;
+    left: 0;
+    top:0px;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 15px;
+}
+.dashboard-circle span{
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 10px;
+    font-size: 8px;
+    font-weight: bold;
+    color: black;
+}
+
+.circle canvas {
+    vertical-align: top;
+    width:60px !important;
+    height:60px !important;
+}
+
+.circle span {
+    position: absolute;
+    top: 18px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 10px;
+    font-size: 8px;
+    font-weight: bold;
+    color: black;
+}
+.circle strong {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 15px;
+}
+
+.circle strong i {
+    font-style: normal;
+    font-size: 0.3em;
+    font-weight: normal;
+}
+
+.circle span {
+    display: block;
+    color: #aaa;
+    margin-top: 12px;
+}
+
+.circle-chart {
+    width: 100px;
+    height: 100px;
+}
+
+.circle-chart__circle {
+    stroke: #3078d5;
+    stroke-width: 2;
+    stroke-linecap: square;
+    fill: none;
+    animation: circle-chart-fill 2s reverse; /* 1 */ 
+    transform: rotate(-90deg); /* 2, 3 */
+    transform-origin: center; /* 4 */
+}
+
+@media screen and (max-width:360px){
+    .padding-small{
+        margin-left:23%;
+    }
+}
+@media screen and (max-width:768){
+    .padding-large{
+        margin-left:23%;
+    }
+}
+
+@media screen and (max-width:1200){
+    .padding-lg{
+        margin-left:23%;
+    }
+}
+
+/* Section End Css Start */
+.active_queue_head{
+    background-color:#299cdb;
+    color:white;
+    padding:5px !important;
+    height:28px;
+}
+.active_queue_charts{
+    height: 130px;
+    margin-top:-18px;
+}
+/* Section End Css End */
+/* 
+tr.group,
+tr:hover {
+    background-color: #ddd !important;
+} */
+
+.service_td:hover{
+    color:black !important;
+    background-color: #299cdb !important;
+}
+
+.agent_actions{
+    cursor: pointer;
+}
+
+/* Reports CSS */
+.td_cnt{
+    border: 1px solid black;
+}
+.province_header{
+    /* border: 1px solid white;*/
+    background-color:#3078d5;text-align:center;
+    color:white; 
+    border-left: 2px solid white;
+}
+.sum_td{
+    border-left: 2px solid #3078d5;
+    text-align:center;
+    color:black;
+}
+.td_count{
+    border: 1px solid #3078d5;
+    text-align:center;
+    color:black;
+}
+[data-layout-mode=dark] .call_states_name{
+	color:white !important;
+}
+[data-layout-mode=dark] .call_states_cnt{
+	color:white !important;
+}
+[data-layout-mode=dark] #calls_locations_chart{
+	color:white !important;
+}
+
+[data-layout-mode=dark] .group td{
+	color:white !important;
+    background-color: black !important;
+}
+
+.div_resize_left{
+    margin-top: -6px !important;
+    margin-left: -11px;
+    font-size: 22px;
+    cursor:w-resize;
+    z-index: 100;
+}
+.div_resize_right{
+    margin-top: -6px !important;
+    margin-right: -9px;
+    cursor:w-resize;
+    font-size: 22px;
+    z-index: 100;
+}
+

@@ -1,0 +1,42 @@
+═══════════════════════════════════════════════════════════════
+  ServiceM8 Webhook URL (Current ngrok Session)
+═══════════════════════════════════════════════════════════════
+
+🌐 Webhook URL:
+https://electrovalently-feisty-anisha.ngrok-free.dev/api/servicem8/webhook
+
+✅ Test Endpoint:
+https://electrovalently-feisty-anisha.ngrok-free.dev/api/servicem8/webhook/test
+
+📋 Steps to Configure in ServiceM8:
+───────────────────────────────────────────────────────────────
+1. Log into ServiceM8 Dashboard
+2. Go to: Settings → Integrations → Webhooks
+3. Click "Add Webhook" or "New Webhook"
+4. Paste the Webhook URL above
+5. Select events to subscribe to:
+   ✓ Job Created
+   ✓ Job Updated  
+   ✓ Job Completed
+   ✓ Invoice Created
+   ✓ Invoice Updated
+6. Save and copy the Webhook Secret (if provided)
+7. Add secret to .env file: SERVICEM8_WEBHOOK_SECRET=your-secret
+
+⚠️  Important Notes:
+───────────────────────────────────────────────────────────────
+• This ngrok URL is temporary (changes each time you restart ngrok)
+• For production, use your actual domain: https://yourdomain.com/api/servicem8/webhook
+• Keep ngrok running while testing
+• Check Laravel logs: storage/logs/laravel.log
+• Check webhook files: storage/app/webhooks/
+
+🧪 Testing:
+───────────────────────────────────────────────────────────────
+1. Test endpoint: Visit the Test Endpoint URL above
+2. Create a test job in ServiceM8
+3. Check logs: storage/logs/laravel.log
+4. Check webhook files: storage/app/webhooks/servicem8-*.json
+
+═══════════════════════════════════════════════════════════════
+

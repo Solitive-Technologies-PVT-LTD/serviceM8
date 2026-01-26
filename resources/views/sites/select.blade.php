@@ -1,12 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
-@section('title', 'Select a Site - Tom\'s Pest Control')
-
-@section('header-action')
-    <a href="{{ route('logout') }}" class="border-2 border-gray-800 hover:bg-gray-800 hover:text-white text-gray-800 font-medium px-6 py-2 rounded transition">
-        LOG OUT
-    </a>
+@section('css')
+@include('layouts.datatable_css')
 @endsection
+
 
 @section('content')
 <div class="max-w-2xl mx-auto">
@@ -22,7 +19,7 @@
         @endphp
 
         @foreach($sites as $site)
-        <a href="{{ route('dashboard', ['site' => $site['id']]) }}" 
+        <a href="{{ route('sites', ['site' => $site['id']]) }}" 
            class="block bg-gray-100 hover:bg-gray-200 rounded-lg p-6 transition group">
             <div class="flex items-center justify-between">
                 <div>
@@ -40,5 +37,7 @@
     </div>
 </div>
 @endsection
+
+
 
 
