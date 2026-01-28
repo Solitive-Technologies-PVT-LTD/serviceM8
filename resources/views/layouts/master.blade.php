@@ -12,7 +12,6 @@
     @endphp
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ $favicon }}">
     <!-- Site Title -->
     <title>{{ config('app.name') }} | @yield('pagetitle')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])

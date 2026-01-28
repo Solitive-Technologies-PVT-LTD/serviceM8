@@ -1,11 +1,9 @@
-@extends('layouts.app1')
+<?php $__env->startSection('title', 'Client Login - Tom\'s Pest Control'); ?>
 
-@section('title', 'Client Login - Tom\'s Pest Control')
+<?php $__env->startSection('header-action'); ?>
+<?php $__env->stopSection(); ?>
 
-@section('header-action')
-@endsection
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="max-w-md mx-auto">
     <div class="bg-white rounded-lg shadow-lg p-8">
         <div class="text-center mb-8">
@@ -18,8 +16,8 @@
             <p class="text-gray-600">Welcome to Tom's Pest Control client portal</p>
         </div>
 
-        <form action="{{ route('login.submit') }}" method="POST">
-            @csrf
+        <form action="<?php echo e(route('login')); ?>" method="POST">
+            <?php echo csrf_field(); ?>
             
             <div class="mb-6">
                 <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
@@ -50,4 +48,5 @@
     </div>
 
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app1', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\serviceM8\resources\views/auth/login.blade.php ENDPATH**/ ?>

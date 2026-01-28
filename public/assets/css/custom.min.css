@@ -590,3 +590,84 @@ table tbody tr td{
 		background-color: #04bb5b !important;
     border-color: #04bb5b !important;
 	}
+
+/* Sidebar background color */
+.app-menu.navbar-menu,
+[data-sidebar="dark"] .app-menu.navbar-menu {
+	background-color: #3a4f3a !important;
+}
+
+/* Menu text color - white */
+.navbar-nav .nav-link,
+.navbar-nav .nav-link span,
+.navbar-nav .menu-title span,
+.navbar-nav .menu-title,
+.navbar-nav .nav-link i,
+[data-sidebar="dark"] .navbar-nav .nav-link,
+[data-sidebar="dark"] .navbar-nav .nav-link span,
+[data-sidebar="dark"] .navbar-nav .menu-title span,
+[data-sidebar="dark"] .navbar-nav .menu-title,
+[data-sidebar="dark"] .navbar-nav .nav-link i {
+	color: #ffffff !important;
+}
+
+/* Menu hover states */
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:hover span,
+.navbar-nav .nav-link:hover i,
+[data-sidebar="dark"] .navbar-nav .nav-link:hover,
+[data-sidebar="dark"] .navbar-nav .nav-link:hover span,
+[data-sidebar="dark"] .navbar-nav .nav-link:hover i {
+	color: #ffffff !important;
+}
+
+/* Active menu item */
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.active span,
+.navbar-nav .nav-link.active i,
+[data-sidebar="dark"] .navbar-nav .nav-link.active,
+[data-sidebar="dark"] .navbar-nav .nav-link.active span,
+[data-sidebar="dark"] .navbar-nav .nav-link.active i {
+	color: #ffffff !important;
+}
+
+/* Submenu items */
+.navbar-nav .nav-sm .nav-link,
+.navbar-nav .nav-sm .nav-link span,
+.navbar-nav .nav-sm .nav-link i,
+[data-sidebar="dark"] .navbar-nav .nav-sm .nav-link,
+[data-sidebar="dark"] .navbar-nav .nav-sm .nav-link span,
+[data-sidebar="dark"] .navbar-nav .nav-sm .nav-link i {
+	color: #ffffff !important;
+}
+
+/* Logo size control - Sidebar */
+.navbar-brand-box .logo-sm img {
+	height: 35px !important;
+	width: 35px !important;
+	max-height: 35px !important;
+	max-width: 35px !important;
+	object-fit: contain;
+}
+
+.navbar-brand-box .logo-lg img {
+	height: 140px !important;
+	max-height: 140px !important;
+	width: auto !important;
+	object-fit: contain;
+}
+
+/* Logo size control - Topbar */
+.horizontal-logo .logo-sm img {
+	height: 18px !important;
+	max-height: 18px !important;
+	width: auto !important;
+	object-fit: contain;
+}
+
+.horizontal-logo .logo-lg img {
+	height: 14px !important;
+	max-height: 14px !important;
+	width: auto !important;
+	object-fit: contain;
+}

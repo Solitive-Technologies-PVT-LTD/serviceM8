@@ -1,12 +1,11 @@
-@extends('layouts.master')
-@section('pagetitle') {{ $pagetitle }} @endsection
-@section('css')
-@include('layouts.datatable_css')
-@endsection
+<?php $__env->startSection('pagetitle'); ?> <?php echo e($pagetitle); ?> <?php $__env->stopSection(); ?>
+<?php $__env->startSection('css'); ?>
+<?php echo $__env->make('layouts.datatable_css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@section('content')
-@component('components.breadcrumb', ['breadcrumbs' => $breadcrumbs, 'pagetitle' => $pagetitle, 'urls' => $urls])
-@endcomponent
+<?php $__env->startSection('content'); ?>
+<?php $__env->startComponent('components.breadcrumb', ['breadcrumbs' => $breadcrumbs, 'pagetitle' => $pagetitle, 'urls' => $urls]); ?>
+<?php echo $__env->renderComponent(); ?>
 <div class="row">
     <div class="col">
 
@@ -24,10 +23,10 @@
                                         
                                         <h5 class="mt-2"><i class="ri-filter-2-line me-1 align-bottom"></i> Filters : </h5>
                                         <div class="col-sm-auto">
-                                            <input type="text" id="start_date" name="start_date" value="{{date('d-m-Y').' 00:00'}}"  class="form-control flatpickr-input" >
+                                            <input type="text" id="start_date" name="start_date" value="<?php echo e(date('d-m-Y').' 00:00'); ?>"  class="form-control flatpickr-input" >
                                         </div>
                                         <div class="col-sm-auto">
-                                        <input type="text" id="end_date" name="end_date" value="{{date('d-m-Y').' 23:59'}}"  class="form-control flatpickr-input" >
+                                        <input type="text" id="end_date" name="end_date" value="<?php echo e(date('d-m-Y').' 23:59'); ?>"  class="form-control flatpickr-input" >
                                         </div>
                                         <button class="btn btn-info submit" id="view_report"> <i class="ri-refresh-line me-1 align-bottom"></i> Submit</button>
                                     </div>
@@ -50,12 +49,12 @@
 
    
 </div>
-@endsection
-@section('script')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
 
-<link rel="stylesheet" href="{{asset('/assets/libs/flatpickr/flatpickr.min.css')}}">
-<script src="{{asset('/assets/libs/flatpickr/flatpickr.min.js')}}"></script>
-<script src="{{ url('assets/libs/echarts/echarts.min.js') }}"></script>
+<link rel="stylesheet" href="<?php echo e(asset('/assets/libs/flatpickr/flatpickr.min.css')); ?>">
+<script src="<?php echo e(asset('/assets/libs/flatpickr/flatpickr.min.js')); ?>"></script>
+<script src="<?php echo e(url('assets/libs/echarts/echarts.min.js')); ?>"></script>
 <script>
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
   
@@ -75,9 +74,9 @@
             $.ajax({
 
             type:'POST',
-            url:"{{ route('dashboard-data') }}",
+            url:"<?php echo e(route('dashboard-data')); ?>",
                
-            data: { _token: '{{csrf_token()}}',start_date:$('#start_date').val(),
+            data: { _token: '<?php echo e(csrf_token()); ?>',start_date:$('#start_date').val(),
                     end_date:$('#end_date').val()},
             
             success:function(data){
@@ -274,4 +273,6 @@
 
    
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\serviceM8\resources\views/dashboard/index.blade.php ENDPATH**/ ?>
