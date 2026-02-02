@@ -19,9 +19,9 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/universal-documentation', function () {
-    return view('universal-docs');
-})->name('universal-docs');
+Route::get('universal-documentation/{folder_id?}',  [DocumentController::class, 'universal'])->name('universal-docs');
+Route::get('/documents/file/{id}/download', [DocumentController::class, 'download'])
+    ->name('documents.file.download');
 
 // Authentication Routes
 Route::get('/login', function () {
@@ -55,10 +55,6 @@ Route::get('/logout', function () {
 Route::get('/sites', function () {
     return view('sites.select');
 })->name('sites.select');
-
-Route::get('/dashboard/{site?}', function ($site = 1) {
-    return view('dashboard', compact('site'));
-})->name('sites');
 
 // Service Routes
 Route::get('/service/{id}', function ($id) {
@@ -113,14 +109,15 @@ Route::get('/documents/{folderId?}', [DocumentController::class, 'index'])
 Route::post('/documents/folder', [DocumentController::class, 'storeFolder'])
     ->name('documents.folder.store');
 
+Route::get('/client-site-document/{client_uuid}/{folderId?}',[DocumentController::class,'clientSiteDocument'])->name('client.document.show');
+Route::get('/client-invoices/{client_uuid}',[DocumentController::class,'getClientInvoices'])->name('client.invoices.show');
+
 Route::delete('/documents/folder/{id}', [DocumentController::class, 'destroyFolder'])
     ->name('documents.folder.delete');
 
 Route::post('/documents/file', [DocumentController::class, 'storeFile'])
     ->name('documents.file.store');
 
-Route::get('/documents/file/{id}/download', [DocumentController::class, 'download'])
-    ->name('documents.file.download');
 
 Route::delete('/documents/file/{id}', [DocumentController::class, 'destroyFile'])
     ->name('documents.file.delete');
@@ -199,7 +196,8 @@ Route::prefix('servicem8')->as('servicem8.')->group(function () {
             ->name('jobs');
 
         Route::get('/attachment/download/{uuid}', [ServiceM8Controller::class, 'downloadAttachment'])
-     ->name('attachment.download');
+            ->name('attachment.download');
+
         Route::get('/jobs/{uuid}', [ServiceM8Controller::class, 'showJob'])
             ->name('jobs.show');
 

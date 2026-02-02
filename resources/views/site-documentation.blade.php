@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.app1')
 
 @section('css')
 @include('layouts.datatable_css')

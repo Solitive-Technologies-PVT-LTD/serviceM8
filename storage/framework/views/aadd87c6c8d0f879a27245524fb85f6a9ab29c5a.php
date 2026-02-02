@@ -1,6 +1,9 @@
 <?php $__env->startSection('title', 'Client Login - Tom\'s Pest Control'); ?>
 
 <?php $__env->startSection('header-action'); ?>
+    <a href="<?php echo e(route('universal-docs')); ?>" class="bg-toms-green hover:bg-green-700 text-white font-medium px-6 py-3 rounded inline-flex items-center transition">
+        Universal Documents →
+    </a>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>

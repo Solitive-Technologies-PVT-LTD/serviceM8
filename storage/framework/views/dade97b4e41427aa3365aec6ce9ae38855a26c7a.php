@@ -106,12 +106,12 @@
                         Request Quote
                     </a>
 
-                    <a href="#"
+                    <a href="<?php echo e(route('client.invoices.show', $companyUuid)); ?>"
                        class="block bg-toms-green hover:bg-green-700 text-white text-center py-3 rounded">
                         View Invoices
                     </a>
 
-                    <a href="#"
+                    <a href="<?php echo e(route('client.document.show', $companyUuid)); ?>"
                        class="block bg-toms-green hover:bg-green-700 text-white text-center py-3 rounded">
                         Site Documentation
                     </a>

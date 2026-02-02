@@ -3,6 +3,9 @@
 @section('title', 'Client Login - Tom\'s Pest Control')
 
 @section('header-action')
+    <a href="{{ route('universal-docs') }}" class="bg-toms-green hover:bg-green-700 text-white font-medium px-6 py-3 rounded inline-flex items-center transition">
+        Universal Documents →
+    </a>
 @endsection
 
 @section('content')

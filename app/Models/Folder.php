@@ -11,6 +11,7 @@ class Folder extends Model
     protected $fillable = [
         'name',
         'parent_id',
+        'company_uuid'
     ];
 
     /* Relationships */

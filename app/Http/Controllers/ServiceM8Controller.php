@@ -38,10 +38,9 @@ class ServiceM8Controller extends Controller
             if ($request->ajax()) {
 
                 // Fetch clients safely from ServiceM8 (use filtering to avoid timeout)
-                $clients = $this->service->getCompanyContact([
+                $clients = $this->service->getClients([
                 '$filter' => "edit_date gt '2026-01-20'"
                 ]);
-                dd($clients);
                 return DataTables::of($clients)
                 ->addColumn('initials', function ($client) {
                     $name = $client['name'] ?? '';
@@ -116,7 +115,7 @@ class ServiceM8Controller extends Controller
          //   'client'        => $client,
             'completedJobs',
             'upcomingJobs',
-            'pagetitle', 'breadcrumbs', 'urls','type'
+            'pagetitle', 'breadcrumbs', 'urls','type','companyUuid'
         ));
     }
 

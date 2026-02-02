@@ -126,6 +126,17 @@ class ServiceM8Service
         // Using your existing GET request function
         return $this->get("attachment.json", $params);
     }
+    
+    public function getClientAttachments(string $uuid, string $cursor = '-1', int $limit = 20)
+    {
+         $params = [
+            '$filter' => "related_object eq 'cl' and related_object_uuid eq '{$uuid}'"
+        ];
+
+        // Using your existing GET request function
+        return $this->get("attachment.json", $params);
+    }
+    
 
    public function downloadAttachmentStream(string $uuid)
 {

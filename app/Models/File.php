@@ -14,6 +14,7 @@ class File extends Model
         'path',
         'mime_type',
         'size',
+        'company_uuid'
     ];
 
     public function folder()

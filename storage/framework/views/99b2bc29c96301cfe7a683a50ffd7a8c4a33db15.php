@@ -1,14 +1,12 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Universal Documentation - Tom\'s Pest Control'); ?>
 
-@section('title', 'Universal Documentation - Tom\'s Pest Control')
-
-@section('header-action')
-    <a href="{{ route('login') }}" class="bg-toms-green hover:bg-green-700 text-white font-medium px-6 py-3 rounded inline-flex items-center transition">
+<?php $__env->startSection('header-action'); ?>
+    <a href="<?php echo e(route('login')); ?>" class="bg-toms-green hover:bg-green-700 text-white font-medium px-6 py-3 rounded inline-flex items-center transition">
         CLIENT LOGIN →
     </a>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="max-w-7xl mx-auto">
     <
     <div class="bg-white rounded-lg shadow-lg p-6">
@@ -377,4 +375,6 @@
         gap: 1rem;
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\laravel-app\resources\views/universal-docs.blade.php ENDPATH**/ ?>
