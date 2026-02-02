@@ -1,148 +1,52 @@
+<?php $__env->startSection('title', 'Client Login - Tom\'s Pest Control'); ?>
 
-<?php $__env->startSection('title'); ?>
-<?php echo app('translator')->get('translation.signin'); ?>
+<?php $__env->startSection('header-action'); ?>
 <?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
-<div class="auth-page-wrapper pt-5">
-    <!-- auth page bg -->
-    <div class="auth-one-bg-position auth-one-bg"  id="auth-particles">
-        <div class="bg-overlay"></div>
-
-        <div class="shape">
-            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1440 120">
-                <path d="M 0,36 C 144,53.6 432,123.2 720,124 C 1008,124.8 1296,56.8 1440,40L1440 140L0 140z"></path>
-            </svg>
+<div class="max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow-lg p-8">
+        <div class="text-center mb-8">
+            <div class="mb-6">
+                <svg class="w-20 h-20 mx-auto text-gray-800" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Client Login</h2>
+            <p class="text-gray-600">Welcome to Tom's Pest Control client portal</p>
         </div>
+
+        <form action="<?php echo e(route('login')); ?>" method="POST">
+            <?php echo csrf_field(); ?>
+            
+            <div class="mb-6">
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input type="email" id="email" name="email" 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-toms-green focus:border-transparent"
+                    placeholder="your.email@example.com (optional for demo)">
+            </div>
+
+            <div class="mb-6">
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                <input type="password" id="password" name="password" 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-toms-green focus:border-transparent"
+                    placeholder="Enter your password (optional for demo)">
+            </div>
+
+            <div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <p class="text-sm text-blue-800 text-center">
+                    <strong>Demo Mode:</strong> Any email/password will work, or use the Demo Login button below
+                </p>
+            </div>
+
+            <button type="submit" class="w-full bg-toms-green hover:bg-green-700 text-white font-medium py-3 rounded-lg transition">
+                Log In
+            </button>
+
+            
+        </form>
     </div>
 
-    <!-- auth page content -->
-    <div class="auth-page-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="text-center mt-sm-5 mb-4 text-white-50">
-                        <div>
-                            <a href="<?php echo e(url('/')); ?>" class="d-inline-block auth-logo">
-                                <img src="<?php echo e(url('/assets/images/jadeed.png')); ?>" alt="Logo" height="100">
-                                
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end row -->
-
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6 col-xl-5">
-                    <div class="card mt-4">
-
-                        <div class="card-body p-4">
-                            <div class="text-center mt-2">
-                                <h5 class="text-primary">Welcome Back !</h5>
-                                <p class="text-muted">Sign in to continue to <?php echo e(get_setting('company_name')); ?>.</p>
-                            </div>
-                            <div class="p-2 mt-4">
-                                <form action="<?php echo e(route('login')); ?>" method="POST">
-                                    <?php echo csrf_field(); ?>
-                                    <div class="mb-3">
-                                        <label for="username" class="form-label">Employee ID</label>
-                                        <input autocomplete="off" type="email" class="form-control <?php $__errorArgs = ['email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" value="<?php echo e(old('email')); ?>" id="email" name="email" placeholder="Enter User Email">
-                                        <?php $__errorArgs = ['email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong><?php echo e($message); ?></strong>
-                                            </span>
-                                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <!-- <div class="float-end">
-                                            <a href="#" class="text-muted">Forgot password?</a>
-                                        </div> -->
-                                        <label class="form-label" for="password-input">Password</label>
-                                        <div class="position-relative auth-pass-inputgroup mb-3">
-                                            <input autocomplete="off" type="password" class="form-control pe-5 <?php $__errorArgs = ['password'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" name="password" placeholder="Enter password" id="password-input" >
-                                            <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
-                                            <?php $__errorArgs = ['password'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong><?php echo e($message); ?></strong>
-                                                </span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                        </div>
-                                    </div>
-
-                                    <!-- <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
-                                        <label class="form-check-label" for="auth-remember-check">Remember me</label>
-                                    </div> -->
-
-                                    <div class="mt-4">
-                                        <button class="btn btn-success w-100" type="submit">Sign In</button>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-                        <!-- end card body -->
-                    </div>
-                    <!-- end card -->
-
-
-                </div>
-            </div>
-            <!-- end row -->
-        </div>
-        <!-- end container -->
-    </div>
-    <!-- end auth page content -->
-
-    <!-- footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="text-center">
-                        <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script> <?php echo e(get_setting('company_name')); ?>. Design & Develop by <strong><?php echo e(get_setting('develop_by')); ?></strong></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- end Footer -->
 </div>
 <?php $__env->stopSection(); ?>
-<?php $__env->startSection('script'); ?>
-<script src="<?php echo e(url('/assets/libs/particles.js/particles.js.min.js')); ?>"></script>
-<script src="<?php echo e(url('/assets/js/pages/particles.app.js')); ?>"></script>
-<script src="<?php echo e(url('/assets/js/pages/password-addon.init.js')); ?>"></script>
-
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.master-without-nav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\laravel-app\resources\views/auth/login.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app1', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\laravel-app\resources\views/auth/login.blade.php ENDPATH**/ ?>

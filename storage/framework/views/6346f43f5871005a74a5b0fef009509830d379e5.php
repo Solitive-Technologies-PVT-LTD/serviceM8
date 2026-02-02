@@ -1,11 +1,11 @@
-@extends('layouts.app1')
 
-@section('title', 'Client Registration - Tom\'s Pest Control')
 
-@section('header-action')
-@endsection
+<?php $__env->startSection('title', 'Client Registration - Tom\'s Pest Control'); ?>
 
-@section('content')
+<?php $__env->startSection('header-action'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
 <div class="max-w-md mx-auto">
     <div class="bg-white rounded-lg shadow-lg p-8">
         <div class="text-center mb-8">
@@ -18,10 +18,10 @@
             <p class="text-gray-600">Create your client portal account</p>
         </div>
 
-        <form action="{{ route('register') }}" method="POST">
-            @csrf
+        <form action="<?php echo e(route('register')); ?>" method="POST">
+            <?php echo csrf_field(); ?>
 
-            {{-- Name --}}
+            
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                 <input type="text" name="name" required
@@ -29,7 +29,7 @@
                     placeholder="John Smith">
             </div>
 
-            {{-- Username --}}
+            
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
                 <input type="text" name="username" required
@@ -37,7 +37,7 @@
                     placeholder="johnsmith">
             </div>
 
-            {{-- Email --}}
+            
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
                 <input type="email" name="email" required
@@ -45,7 +45,7 @@
                     placeholder="john@example.com">
             </div>
 
-            {{-- Contact Number --}}
+            
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Contact Number</label>
                 <input type="text" name="contact_number" required
@@ -53,7 +53,7 @@
                     placeholder="+61 4XX XXX XXX">
             </div>
 
-            {{-- Password --}}
+            
             <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
                 <input type="password" name="password" required
@@ -61,20 +61,22 @@
                     placeholder="Create a strong password">
             </div>
 
-            {{-- Submit --}}
+            
             <button type="submit"
                 class="w-full bg-toms-green hover:bg-green-700 text-white font-medium py-3 rounded-lg transition">
                 Register
             </button>
 
-            {{-- Login link --}}
+            
             <p class="text-center text-sm text-gray-600 mt-6">
                 Already have an account?
-                <a href="{{ route('login') }}" class="text-toms-green font-medium hover:underline">
+                <a href="<?php echo e(route('login')); ?>" class="text-toms-green font-medium hover:underline">
                     Log in
                 </a>
             </p>
         </form>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app1', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\laravel-app\resources\views/auth/register.blade.php ENDPATH**/ ?>

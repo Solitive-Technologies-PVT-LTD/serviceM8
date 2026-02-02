@@ -1,21 +1,25 @@
-@extends('layouts.master')
+@extends($type == 'client' ? 'layouts.app1' : 'layouts.master')
 
 @section('pagetitle')
-    {{ $pagetitle }}
+    {{ $pagetitle ?? '' }}
 @endsection
 
 @section('css')
+@if($type != 'client')
     @include('layouts.datatable_css')
+@endif
 @endsection
 
 @section('content')
 
-@component('components.breadcrumb', [
-    'breadcrumbs' => $breadcrumbs,
-    'pagetitle' => $pagetitle,
-    'urls' => $urls
-])
-@endcomponent
+@if($type != 'client')
+    @component('components.breadcrumb', [
+        'breadcrumbs' => $breadcrumbs,
+        'pagetitle' => $pagetitle,
+        'urls' => $urls
+    ])
+    @endcomponent
+@endif
 
 <div class="max-w-7xl mx-auto px-4">
 
@@ -30,7 +34,7 @@
 
             @forelse($completedJobs as $job)
                <a href="{{ route('servicem8.jobs.show', $job['uuid']) }}" 
-                       class="block bg-white rounded-lg p-3 shadow hover:shadow-md transition">
+                       class="block bg-white rounded-lg p-3 shadow hover:shadow-md transition" style="margin-bottom:10px">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-900 font-medium mb-1">{{ \Carbon\Carbon::parse($job['edit_date'])->format('M d, Y') }}</p>

@@ -5,35 +5,19 @@
         <!-- Dark Logo-->
         <a href="<?php echo e(url('/')); ?>" class="logo logo-dark">
             <span class="logo-sm">
-            <?php if(empty(get_setting('company_logo'))): ?>
-            <!-- <img src="<?php echo e(url('/assets/images/favicon.jpeg')); ?>" alt="Logo" height="50" width="50"> -->
-            <?php else: ?>
-            <!-- <img src="<?php echo e(url('/storage/'.get_setting('company_logo_sm'))); ?>" alt="Logo" height="50" width="50"> -->
-            <?php endif; ?>
+                <img src="<?php echo e(url('/images/Tom-Pest-Control_logo.png')); ?>" alt="Tom's Pest Control" style="height: 35px; width: 35px; max-height: 35px; max-width: 35px; object-fit: contain;">
             </span>
             <span class="logo-lg">
-            <?php if(empty(get_setting('company_logo'))): ?>
-            <!-- <img src="<?php echo e(url('/assets/images/favicon.jpeg')); ?>" alt="Logo" height="60"> -->
-            <?php else: ?>
-            <!-- <img src="<?php echo e(url('/storage/'.get_setting('company_logo'))); ?>" alt="Logo" height="60"> -->
-            <?php endif; ?>
+                <img src="<?php echo e(url('/images/Tom-Pest-Control_logo.png')); ?>" alt="Tom's Pest Control" style="height: 140px; max-height: 140px; width: auto; object-fit: contain;">
             </span>
         </a>
         <!-- Light Logo-->
         <a href="<?php echo e(url('/')); ?>" class="logo logo-light">
             <span class="logo-sm">
-            <?php if(empty(get_setting('company_logo'))): ?>
-            <!-- <img src="<?php echo e(url('/assets/images/favicon.jpeg')); ?>" alt="Logo" height="50" width="50"> -->
-            <?php else: ?>
-            <!-- <img src="<?php echo e(url('/storage/'.get_setting('company_logo_sm'))); ?>" alt="Logo" height="50" width="50"> -->
-            <?php endif; ?>
+                <img src="<?php echo e(url('/images/Tom-Pest-Control_logo.png')); ?>" alt="Tom's Pest Control" style="height: 35px; width: 35px; max-height: 35px; max-width: 35px; object-fit: contain;">
             </span>
             <span class="logo-lg">
-            <?php if(empty(get_setting('company_logo'))): ?>
-            <!-- <img src="<?php echo e(url('/assets/images/favicon.jpeg')); ?>" alt="Logo" height="60"> -->
-            <?php else: ?>
-            <!-- <img src="<?php echo e(url('/storage/'.get_setting('company_logo'))); ?>" alt="Logo" height="60"> -->
-            <?php endif; ?>
+                <img src="<?php echo e(url('/images/Tom-Pest-Control_logo.png')); ?>" alt="Tom's Pest Control" style="height: 140px; max-height: 140px; width: auto; object-fit: contain;">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">

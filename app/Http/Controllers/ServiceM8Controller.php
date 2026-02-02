@@ -6,7 +6,7 @@ use App\Services\ServiceM8\ServiceM8Service;
 use Illuminate\Http\Request;
 
 use Yajra\DataTables\Facades\DataTables;
-
+use Auth;
 class ServiceM8Controller extends Controller
 {
     protected ServiceM8Service $service;
@@ -38,9 +38,10 @@ class ServiceM8Controller extends Controller
             if ($request->ajax()) {
 
                 // Fetch clients safely from ServiceM8 (use filtering to avoid timeout)
-                $clients = $this->service->getClients([
+                $clients = $this->service->getCompanyContact([
                 '$filter' => "edit_date gt '2026-01-20'"
                 ]);
+                dd($clients);
                 return DataTables::of($clients)
                 ->addColumn('initials', function ($client) {
                     $name = $client['name'] ?? '';
@@ -84,7 +85,7 @@ class ServiceM8Controller extends Controller
                 ->rawColumns(['active', 'actions'])
                 ->make(true);
             }
-
+            
             return view('servicem8.clients.index', compact('pagetitle', 'breadcrumbs', 'urls'));
         }
 
@@ -110,11 +111,12 @@ class ServiceM8Controller extends Controller
             return empty($job['completion_date']) && !empty($job['job_is_scheduled_until_stamp']);
         });
       //  dd($completedJobs);
+      $type=Auth::user()->type;
         return view('serviceM8.clientJobs.index', compact(
          //   'client'        => $client,
             'completedJobs',
             'upcomingJobs',
-            'pagetitle', 'breadcrumbs', 'urls'
+            'pagetitle', 'breadcrumbs', 'urls','type'
         ));
     }
 
@@ -173,11 +175,12 @@ class ServiceM8Controller extends Controller
         }
 
         $attachments = array_slice($attachments, 0, 20);
-
+        $type=Auth::user()->type;
         return view('servicem8.jobs.show', [
             'job' => $job,
             'attachments' => $attachments,
-            'nextCursor' => $cursor
+            'nextCursor' => $cursor,
+            'type'=>$type,
         ]);
     }
 

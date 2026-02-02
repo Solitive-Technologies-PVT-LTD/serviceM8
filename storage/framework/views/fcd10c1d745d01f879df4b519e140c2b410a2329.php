@@ -6,19 +6,19 @@
                 <div class="navbar-brand-box horizontal-logo">
                     <a href="<?php echo e(url('/')); ?>" class="logo logo-dark">
                         <span class="logo-sm">
-                            <img src="<?php echo e(url('/storage/'.get_setting('company_logo'))); ?>" alt="" height="22">
+                            <img src="<?php echo e(url('/images/Tom-Pest-Control_logo.png')); ?>" alt="Tom's Pest Control" style="height: 18px; max-height: 18px; width: auto; object-fit: contain;">
                         </span>
                         <span class="logo-lg">
-                            <img src="<?php echo e(url('/storage/'.get_setting('company_logo'))); ?>" alt="" height="17">
+                            <img src="<?php echo e(url('/images/Tom-Pest-Control_logo.png')); ?>" alt="Tom's Pest Control" style="height: 14px; max-height: 14px; width: auto; object-fit: contain;">
                         </span>
                     </a>
 
                     <a href="<?php echo e(url('/')); ?>" class="logo logo-light">
                         <span class="logo-sm">
-                            <img src="<?php echo e(url('/storage/'.get_setting('company_logo'))); ?>" alt="" height="22">
+                            <img src="<?php echo e(url('/images/Tom-Pest-Control_logo.png')); ?>" alt="Tom's Pest Control" style="height: 18px; max-height: 18px; width: auto; object-fit: contain;">
                         </span>
                         <span class="logo-lg">
-                            <img src="<?php echo e(url('/storage/'.get_setting('company_logo'))); ?>" alt="" height="17">
+                            <img src="<?php echo e(url('/images/Tom-Pest-Control_logo.png')); ?>" alt="Tom's Pest Control" style="height: 14px; max-height: 14px; width: auto; object-fit: contain;">
                         </span>
                     </a>
                 </div>

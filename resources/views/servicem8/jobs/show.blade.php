@@ -1,7 +1,10 @@
-@extends('layouts.master')
+@extends($type == 'client' ? 'layouts.app1' : 'layouts.master')
 
-@section('css')
+
 <!-- FontAwesome for icons -->
+
+
+@section('content')
 
 <style>
     body {
@@ -136,9 +139,7 @@
         .job-details .label { width: 120px; }
     }
 </style>
-@endsection
 
-@section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pap3eFfZjl/Y1k4n3kFqMxjruT3kWj9+p+5lM8e1/GBK3iP1tIKG/9Oy5gjy8lZ8+eHdfm+0H+lTtq0BhfR0Ew==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <div class="job-container">

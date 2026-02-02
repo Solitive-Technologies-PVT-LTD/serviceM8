@@ -14,13 +14,19 @@ use Auth;
 use DB;
 use PhpParser\Node\Expr\New_;
 use Validator;
+use App\Services\ServiceM8\ServiceM8Service;
 
 class DashboardController extends Controller
 {
-    function __construct()
+          protected ServiceM8Service $service;
+
+    function __construct(ServiceM8Service $service)
     {
         $this->middleware('auth');
         $this->middleware('permission:view-dashboard', ['only' => ['index','getData']]);
+
+                $this->service = $service;
+
     }
        
     public function index()
@@ -28,8 +34,18 @@ class DashboardController extends Controller
         $pagetitle    = "Dashboard";
         $breadcrumbs  = ["Dashboard"];
         $urls         = ["/"];
-        return view('dashboard.index', compact('pagetitle', 'breadcrumbs', 'urls'));
-
+        if(Auth::user()->type=="client")
+        {
+            $company_uuid=Auth::user()->servicem8_company_uuid;
+            $clients = $this->service->getClients([
+                '$filter' => "uuid eq ".$company_uuid.""
+            ]); 
+          return view('sites.select', compact('clients'));
+        }
+        else
+        {
+            return view('dashboard.index', compact('pagetitle', 'breadcrumbs', 'urls'));
+        }
     } 
 
     public function dashboardAjax(Request $request)

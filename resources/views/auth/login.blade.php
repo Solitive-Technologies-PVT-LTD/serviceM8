@@ -18,7 +18,7 @@
             <p class="text-gray-600">Welcome to Tom's Pest Control client portal</p>
         </div>
 
-        <form action="{{ route('login.submit') }}" method="POST">
+        <form action="{{ route('login') }}" method="POST">
             @csrf
             
             <div class="mb-6">

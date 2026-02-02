@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('pagetitle'); ?> <?php echo e($pagetitle); ?> <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
 <?php echo $__env->make('layouts.datatable_css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -66,7 +65,6 @@
                     enableTime: true,
                     dateFormat: "d-m-Y H:i",
         });
-     //   ajaxCall();
     }
    
     function ajaxCall()

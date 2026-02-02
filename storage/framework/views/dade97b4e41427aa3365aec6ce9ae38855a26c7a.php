@@ -1,22 +1,26 @@
 
 
 <?php $__env->startSection('pagetitle'); ?>
-    <?php echo e($pagetitle); ?>
+    <?php echo e($pagetitle ?? ''); ?>
 
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
+<?php if($type != 'client'): ?>
     <?php echo $__env->make('layouts.datatable_css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php endif; ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
 
-<?php $__env->startComponent('components.breadcrumb', [
-    'breadcrumbs' => $breadcrumbs,
-    'pagetitle' => $pagetitle,
-    'urls' => $urls
-]); ?>
-<?php echo $__env->renderComponent(); ?>
+<?php if($type != 'client'): ?>
+    <?php $__env->startComponent('components.breadcrumb', [
+        'breadcrumbs' => $breadcrumbs,
+        'pagetitle' => $pagetitle,
+        'urls' => $urls
+    ]); ?>
+    <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
 
 <div class="max-w-7xl mx-auto px-4">
 
@@ -31,7 +35,7 @@
 
             <?php $__empty_1 = true; $__currentLoopData = $completedJobs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $job): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                <a href="<?php echo e(route('servicem8.jobs.show', $job['uuid'])); ?>" 
-                       class="block bg-white rounded-lg p-3 shadow hover:shadow-md transition">
+                       class="block bg-white rounded-lg p-3 shadow hover:shadow-md transition" style="margin-bottom:10px">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-900 font-medium mb-1"><?php echo e(\Carbon\Carbon::parse($job['edit_date'])->format('M d, Y')); ?></p>
@@ -124,4 +128,4 @@
 </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\laravel-app\resources\views/serviceM8/clientJobs/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make($type == 'client' ? 'layouts.app1' : 'layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\laravel-app\resources\views/serviceM8/clientJobs/index.blade.php ENDPATH**/ ?>

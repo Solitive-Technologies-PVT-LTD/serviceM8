@@ -86,6 +86,12 @@ class ServiceM8Service
     {
         return $this->get('company.json', $params);
     }
+
+    public function getCompanyContact(array $params=[])
+    {
+        return $this->get('companycontact.json', $params);
+    }
+
     public function getStaff(array $params = [])
     {
         return $this->get('staff.json', $params);

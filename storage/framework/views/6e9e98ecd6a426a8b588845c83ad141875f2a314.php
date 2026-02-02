@@ -12,7 +12,6 @@
     ?>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="<?php echo e($favicon); ?>">
     <!-- Site Title -->
     <title><?php echo e(config('app.name')); ?> | <?php echo $__env->yieldContent('pagetitle'); ?></title>
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>

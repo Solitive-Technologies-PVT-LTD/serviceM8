@@ -1,7 +1,10 @@
 
 
-<?php $__env->startSection('css'); ?>
+
 <!-- FontAwesome for icons -->
+
+
+<?php $__env->startSection('content'); ?>
 
 <style>
     body {
@@ -136,9 +139,7 @@
         .job-details .label { width: 120px; }
     }
 </style>
-<?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('content'); ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pap3eFfZjl/Y1k4n3kFqMxjruT3kWj9+p+5lM8e1/GBK3iP1tIKG/9Oy5gjy8lZ8+eHdfm+0H+lTtq0BhfR0Ew==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <div class="job-container">
@@ -248,4 +249,4 @@ loadMoreBtn.addEventListener('click', fetchAttachments);
 </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\laravel-app\resources\views/servicem8/jobs/show.blade.php ENDPATH**/ ?>
+<?php echo $__env->make($type == 'client' ? 'layouts.app1' : 'layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\laravel-app\resources\views/servicem8/jobs/show.blade.php ENDPATH**/ ?>
