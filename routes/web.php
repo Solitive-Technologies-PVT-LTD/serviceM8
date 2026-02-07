@@ -215,5 +215,9 @@ Route::prefix('servicem8')->as('servicem8.')->group(function () {
     });
     Route::get('/company/{companyUuid}', [ServiceM8Controller::class, 'clientJobs'])
     ->name('company.clientJobs');
+    // web.php
+    Route::get('/client/{client_uuid}/documents/tag/{tagName}', [DocumentController::class, 'clientSiteDocumentByTag'])
+    ->name('client.document.byTag');
+
     
 });

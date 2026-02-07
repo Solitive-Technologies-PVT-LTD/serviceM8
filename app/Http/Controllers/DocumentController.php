@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Services\ServiceM8\ServiceM8Service;
 use Auth;
+use App\Models\Tag;
+
 class DocumentController extends Controller
 {
     
@@ -80,27 +82,51 @@ class DocumentController extends Controller
         return back()->with('success', 'Folder created');
     }
 
-    public function storeFile(Request $request)
-    {
-        $request->validate([
-            'folder_id' => 'required|exists:folders,id',
-            'file' => 'required|file',
-        ]);
 
-        $uploaded = $request->file('file');
-        $path = $uploaded->store('documents');
+public function storeFile(Request $request)
+{
+    $request->validate([
+        'folder_id' => 'required|exists:folders,id',
+        'file'      => 'required|file|max:10240', // 10MB (adjust if needed)
+        'tags'      => 'nullable|string',
+    ]);
 
-        File::create([
-            'folder_id' => $request->folder_id,
-            'name' => $uploaded->getClientOriginalName(),
-            'path' => $path,
-            'mime_type' => $uploaded->getClientMimeType(),
-            'size' => $uploaded->getSize(),
-            'company_uuid'=>$request->company_uuid ?? '',
-        ]);
+    // Store file
+    $uploadedFile = $request->file('file');
+    $path = $uploadedFile->store('documents');
 
-        return back()->with('success', 'File uploaded');
+    // Create file record
+    $file = File::create([
+        'folder_id'   => $request->folder_id,
+        'name'        => $uploadedFile->getClientOriginalName(),
+        'path'        => $path,
+        'mime_type'   => $uploadedFile->getClientMimeType(),
+        'size'        => $uploadedFile->getSize(),
+        'company_uuid'=> $request->company_uuid ?? null,
+    ]);
+
+    /**
+     * Handle tags
+     */
+    if ($request->filled('tags')) {
+
+        $tagIds = collect(explode(',', $request->tags))
+            ->map(fn ($tag) => strtolower(trim($tag)))
+            ->filter()
+            ->unique()
+            ->map(function ($tagName) {
+                return Tag::firstOrCreate([
+                    'name' => $tagName
+                ])->id;
+            });
+
+        // Attach tags via pivot table
+        $file->tags()->sync($tagIds);
     }
+
+    return back()->with('success', 'File uploaded successfully');
+}
+
 
     public function download($id)
     {
@@ -124,47 +150,58 @@ class DocumentController extends Controller
         return back()->with('success', 'Folder deleted');
     }
 
-    public function clientSiteDocument($uuid,$folderId = null)
-    {
-       $companyUuid = $uuid; // get from auth(), request(), or route
+public function clientSiteDocument($uuid, $folderId = null)
+{
+    $companyUuid = $uuid;
 
-        $currentFolder = $folderId
-            ? Folder::where('company_uuid', $companyUuid)->findOrFail($folderId)
-            : null;
+    $currentFolder = $folderId
+        ? Folder::where('company_uuid', $companyUuid)->findOrFail($folderId)
+        : null;
 
-        $folders = $currentFolder
-            ? $currentFolder->children()
-                ->where('company_uuid', $companyUuid)
-                ->get()
-            : Folder::whereNull('parent_id')
-                ->where('company_uuid', $companyUuid)
-                ->get();
+    $folders = $currentFolder
+        ? $currentFolder->children()
+            ->where('company_uuid', $companyUuid)
+            ->get()
+        : Folder::whereNull('parent_id')
+            ->where('company_uuid', $companyUuid)
+            ->get();
 
-        $files = $currentFolder
-            ? $currentFolder->files()
-                ->where('company_uuid', $companyUuid)
-                ->get()
-            : collect();
+    // Eager load tags
+    $files = $currentFolder
+        ? $currentFolder->files()->with('tags')
+            ->where('company_uuid', $companyUuid)
+            ->when(request('tag'), function($q){
+                $q->whereHas('tags', function($q2){
+                    $q2->where('name', request('tag'));
+                });
+            })
+            ->get()
+        : collect();
 
-        // Breadcrumb
-        $breadcrumb = [];
-        $folder = $currentFolder;
+    // Fetch all unique tags for filtering
+    $tags = Tag::whereHas('files', function($q) use ($companyUuid){
+        $q->where('company_uuid', $companyUuid);
+    })->get();
 
-        while ($folder && $folder->company_uuid === $companyUuid) {
-            array_unshift($breadcrumb, $folder);
-            $folder = $folder->parent;
-        }
-        $type=Auth::user()->type =="client";
-
-        return view('client.documents.index', compact(
-            'folders',
-            'files',
-            'currentFolder',
-            'breadcrumb',
-            'type','uuid'
-        ));
-
+    // Breadcrumb
+    $breadcrumb = [];
+    $folder = $currentFolder;
+    while ($folder && $folder->company_uuid === $companyUuid) {
+        array_unshift($breadcrumb, $folder);
+        $folder = $folder->parent;
     }
+
+    $type = Auth::user()->type == "client";
+      // AJAX: return rendered HTML
+    if (request()->ajax()) {
+        $html = view('client.documents.folder_files', compact('folders','files','uuid'))->render();
+        return $html;
+    }
+    return view('client.documents.index', compact(
+        'folders','files','currentFolder','breadcrumb','type','uuid','tags'
+    ));
+}
+
 
     public function getClientInvoices($uuid)
     {
@@ -178,4 +215,39 @@ class DocumentController extends Controller
         ));
         
     }
+
+    public function clientSiteDocumentByTag($uuid, $tagName)
+    {
+        $companyUuid = $uuid;
+
+        // Find tag
+        $tag = Tag::where('name', $tagName)->firstOrFail();
+
+        // No current folder needed for tag filtering
+        $currentFolder = null;
+
+        // Get folders as usual
+        $folders = Folder::whereNull('parent_id')
+            ->where('company_uuid', $companyUuid)
+            ->get();
+
+        // Get files with this tag only
+        $files = File::with('tags')
+            ->where('company_uuid', $companyUuid)
+            ->whereHas('tags', function($q) use ($tag) {
+                $q->where('tags.id', $tag->id);
+            })
+            ->get();
+
+        return view('client.documents.index', [
+            'folders' => $folders,
+            'files' => $files,
+            'currentFolder' => $currentFolder,
+            'breadcrumb' => [],
+            'type' => Auth::user()->type === 'client',
+            'uuid' => $uuid,
+            'currentTag' => $tag,
+        ]);
+    }
+
 }

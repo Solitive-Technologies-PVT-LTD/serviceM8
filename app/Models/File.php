@@ -21,4 +21,10 @@ class File extends Model
     {
         return $this->belongsTo(Folder::class, 'folder_id');
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
 }
