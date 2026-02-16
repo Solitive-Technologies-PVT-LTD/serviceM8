@@ -38,8 +38,10 @@ class ServiceM8Controller extends Controller
             if ($request->ajax()) {
 
                 // Fetch clients safely from ServiceM8 (use filtering to avoid timeout)
+              $tenDaysAgo = date('Y-m-d', strtotime('-10 days'));
+
                 $clients = $this->service->getClients([
-                '$filter' => "edit_date gt '2026-01-20'"
+                    '$filter' => "edit_date gt '{$tenDaysAgo}'"
                 ]);
                 return DataTables::of($clients)
                 ->addColumn('initials', function ($client) {
@@ -111,7 +113,7 @@ class ServiceM8Controller extends Controller
         });
       //  dd($completedJobs);
       $type=Auth::user()->type;
-        return view('serviceM8.clientJobs.index', compact(
+        return view('servicem8.clientJobs.index', compact(
          //   'client'        => $client,
             'completedJobs',
             'upcomingJobs',
@@ -402,7 +404,9 @@ class ServiceM8Controller extends Controller
             $filters = [];
 
             // 🔹 Date filter (fixed from Jan 1, 2026)
-            $filters[] = "edit_date gt '2026-01-20'";
+           $tenDaysAgo = date('Y-m-d', strtotime('-10 days'));
+
+            $filters[] = "edit_date gt '{$tenDaysAgo}'";
 
             // 🔹 Staff filter
             if ($request->filled('staff_uuid')) {
