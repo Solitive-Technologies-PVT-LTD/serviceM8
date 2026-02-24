@@ -155,7 +155,7 @@
     <!-- Job Information Sections -->
     <div class="job-section job-details">
         <h3>Job Details</h3>
-        <div class="detail"><div class="label">Date:</div> <?php echo e($job['date'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Date:</div> <?php echo e($job['work_order_date'] ?? '—'); ?></div>
         <div class="detail"><div class="label">Status:</div> <?php echo e($job['status'] ?? '—'); ?></div>
         <div class="detail"><div class="label">Job Address:</div> <?php echo e($job['job_address'] ?? '—'); ?></div>
         <div class="detail"><div class="label">Job Description:</div> <?php echo e($job['job_description'] ?? '—'); ?></div>
@@ -165,14 +165,14 @@
 
     <div class="job-section job-details">
         <h3>Payment & Invoice</h3>
-        <div class="detail"><div class="label">Total Invoice Amount:</div> <?php echo e($job['total_invoice_amount'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Total Invoice Amount:</div> $<?php echo e(number_format((float)$job['total_invoice_amount'], 2) ?? '—'); ?></div>
         <div class="detail"><div class="label">Payment Received:</div> <?php echo e($job['payment_received'] ?? '—'); ?></div>
         <div class="detail"><div class="label">Payment Date:</div> <?php echo e($job['payment_date'] ?? '—'); ?></div>
         <div class="detail"><div class="label">Payment Method:</div> <?php echo e($job['payment_method'] ?? '—'); ?></div>
         <div class="detail"><div class="label">Completion Date:</div> <?php echo e($job['completion_date'] ?? '—'); ?></div>
     </div>
 
-    <div class="job-section job-details">
+    <!-- <div class="job-section job-details">
         <h3>Location & Queue</h3>
         <div class="detail"><div class="label">Geo Country:</div> <?php echo e($job['geo_country'] ?? '—'); ?></div>
         <div class="detail"><div class="label">Geo State:</div> <?php echo e($job['geo_state'] ?? '—'); ?></div>
@@ -180,7 +180,7 @@
         <div class="detail"><div class="label">Geo Street:</div> <?php echo e($job['geo_street'] ?? '—'); ?></div>
         <div class="detail"><div class="label">Queue UUID:</div> <?php echo e($job['queue_uuid'] ?? '—'); ?></div>
         <div class="detail"><div class="label">Queue Assigned Staff:</div> <?php echo e($job['queue_assigned_staff_uuid'] ?? '—'); ?></div>
-    </div>
+    </div> -->
 
     <!-- Attachments -->
     <div class="job-section">

@@ -13,7 +13,7 @@
 
         {{-- Logo --}}
         <div class="flex items-center">
-            <img src="{{ asset('images/logo.png') }}" alt="Tom's Pest Control" class="h-16" onerror="this.style.display='none'">
+            <img src="{{ url('/images/Tom-Pest-Control_logo.png') }}" alt="Tom's Pest Control" class="h-16" onerror="this.style.display='none'">
             <div class="ml-3">
                 <h1 class="text-xl font-semibold">
                     <span class="text-toms-green">TOM'S PEST</span>

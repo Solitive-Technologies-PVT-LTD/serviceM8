@@ -122,9 +122,13 @@ class ServiceM8Service
          $params = [
             '$filter' => "related_object eq 'job' and related_object_uuid eq '{$jobUuid}'"
         ];
-
+        
         // Using your existing GET request function
         return $this->get("attachment.json", $params);
+    }
+    public function getAttachment($uuid, array $params = [])
+    {
+        return $this->get("dboattachment/{$uuid}.json", $params);
     }
     
     public function getClientAttachments(string $uuid, string $cursor = '-1', int $limit = 20)
@@ -150,7 +154,7 @@ class ServiceM8Service
     if ($response->failed()) {
         abort(404, 'Attachment not found.');
     }
-   
+    
     return $response->body();
 }
 

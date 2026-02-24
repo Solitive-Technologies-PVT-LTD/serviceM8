@@ -102,15 +102,44 @@ class ServiceM8Controller extends Controller
             '$filter' => "company_uuid eq '$companyUuid'",
             '$orderby' => 'date desc'
         ]);
-
+        
+        $zeroDate = '0000-00-00 00:00:00';
         // Split jobs
-        $completedJobs = collect($jobs)->filter(function ($job) {
-            return !empty($job['completion_date']);
-        });
+   $completedJobs = collect($jobs)
+    ->filter(function ($job) use ($zeroDate) {
 
-        $upcomingJobs = collect($jobs)->filter(function ($job) {
-            return empty($job['completion_date']) && !empty($job['job_is_scheduled_until_stamp']);
+        $completionDate   = $job['completion_date'] ?? null;
+        $unsuccessfulDate = $job['unsuccessful_date'] ?? null;
+
+        return (
+            (!empty($completionDate) && $completionDate !== $zeroDate)
+            || ($job['status'] ?? null) === 'Unsuccessful'
+            || (!empty($unsuccessfulDate) && $unsuccessfulDate !== $zeroDate)
+        );
+    })
+    ->sortByDesc(function ($job) use ($zeroDate) {
+
+        $completionDate   = $job['completion_date'] ?? null;
+        $unsuccessfulDate = $job['unsuccessful_date'] ?? null;
+
+        if (!empty($completionDate) && $completionDate !== $zeroDate) {
+            return $completionDate;
+        }
+
+        return $unsuccessfulDate;
+    })
+    ->values();
+       $upcomingJobs = collect($jobs)->filter(function ($job) {
+            return (
+                empty($job['completion_date']) 
+                || $job['completion_date'] === '0000-00-00 00:00:00'
+            )
+            && ( empty($job['unsuccessful_date']) 
+                || $job['unsuccessful_date'] === '0000-00-00 00:00:00'
+            )
+            && !empty($job['work_order_date']);
         });
+        
       //  dd($completedJobs);
       $type=Auth::user()->type;
         return view('servicem8.clientJobs.index', compact(
@@ -137,13 +166,14 @@ class ServiceM8Controller extends Controller
    public function downloadAttachment(string $uuid)
 {
     $fileContent = $this->service->downloadAttachmentStream($uuid);
-
+    
     // Optional: fetch metadata to get the proper filename and extension
-    $meta = $this->service->getJobAttachments($uuid); // returns array
-    $attachment = $meta[0] ?? [];
+    $meta = $this->service->getAttachment($uuid); // returns array
+    
+    $attachment = $meta ?? [];
     $fileName = $attachment['attachment_name'] ?? $uuid;
     $fileType = $attachment['file_type'] ?? '';
-
+    
     $contentType = match(strtolower($fileType)) {
         '.pdf' => 'application/pdf',
         '.jpg', '.jpeg' => 'image/jpeg',
@@ -154,7 +184,7 @@ class ServiceM8Controller extends Controller
         '.txt' => 'text/plain',
         default => 'application/octet-stream',
     };
-
+    
     return response($fileContent, 200)
         ->header('Content-Type', $contentType)
         ->header('Content-Disposition', 'attachment; filename="' . $fileName . $fileType . '"')
@@ -166,6 +196,7 @@ class ServiceM8Controller extends Controller
     public function showJob(string $jobUuid)
     {
         $job = $this->service->getJob($jobUuid); // your existing job fetch
+      //  dd($job);
         $cursor = '-1';
         $attachments = [];
 

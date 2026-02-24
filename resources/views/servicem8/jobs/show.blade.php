@@ -154,7 +154,7 @@
     <!-- Job Information Sections -->
     <div class="job-section job-details">
         <h3>Job Details</h3>
-        <div class="detail"><div class="label">Date:</div> {{ $job['date'] ?? '—' }}</div>
+        <div class="detail"><div class="label">Date:</div> {{ $job['work_order_date'] ?? '—' }}</div>
         <div class="detail"><div class="label">Status:</div> {{ $job['status'] ?? '—' }}</div>
         <div class="detail"><div class="label">Job Address:</div> {{ $job['job_address'] ?? '—' }}</div>
         <div class="detail"><div class="label">Job Description:</div> {{ $job['job_description'] ?? '—' }}</div>
@@ -164,14 +164,14 @@
 
     <div class="job-section job-details">
         <h3>Payment & Invoice</h3>
-        <div class="detail"><div class="label">Total Invoice Amount:</div> {{ $job['total_invoice_amount'] ?? '—' }}</div>
+        <div class="detail"><div class="label">Total Invoice Amount:</div> ${{ number_format((float)$job['total_invoice_amount'], 2) ?? '—' }}</div>
         <div class="detail"><div class="label">Payment Received:</div> {{ $job['payment_received'] ?? '—' }}</div>
         <div class="detail"><div class="label">Payment Date:</div> {{ $job['payment_date'] ?? '—' }}</div>
         <div class="detail"><div class="label">Payment Method:</div> {{ $job['payment_method'] ?? '—' }}</div>
         <div class="detail"><div class="label">Completion Date:</div> {{ $job['completion_date'] ?? '—' }}</div>
     </div>
 
-    <div class="job-section job-details">
+    <!-- <div class="job-section job-details">
         <h3>Location & Queue</h3>
         <div class="detail"><div class="label">Geo Country:</div> {{ $job['geo_country'] ?? '—' }}</div>
         <div class="detail"><div class="label">Geo State:</div> {{ $job['geo_state'] ?? '—' }}</div>
@@ -179,7 +179,7 @@
         <div class="detail"><div class="label">Geo Street:</div> {{ $job['geo_street'] ?? '—' }}</div>
         <div class="detail"><div class="label">Queue UUID:</div> {{ $job['queue_uuid'] ?? '—' }}</div>
         <div class="detail"><div class="label">Queue Assigned Staff:</div> {{ $job['queue_assigned_staff_uuid'] ?? '—' }}</div>
-    </div>
+    </div> -->
 
     <!-- Attachments -->
     <div class="job-section">
