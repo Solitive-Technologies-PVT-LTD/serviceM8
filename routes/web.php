@@ -18,7 +18,7 @@ use App\Http\Controllers\DocumentController;
 Route::get('/', function () {
     return view('home');
 })->name('home');
-
+Route::get('/test', [ServiceM8Controller::class, 'createUserFromCompany']);
 Route::get('universal-documentation/{folder_id?}',  [DocumentController::class, 'universal'])->name('universal-docs');
 Route::get('/documents/file/{id}/download', [DocumentController::class, 'download'])
     ->name('documents.file.download');
