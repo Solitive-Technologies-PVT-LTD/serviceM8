@@ -54,7 +54,7 @@ class ServiceM8Controller extends Controller
         {    
             // Example dummy email
           //  $contactEmail = $company_contact['email'];
-            $contactEmail='rasoolkhizer9@gmail.com';
+            $contactEmail='rasoolkhizer1@gmail.com';
             $contactName   = $company_contact['first'] ." ".$company_contact['last'];             
             $contactPhone = $company_contact['mobile'];
 
