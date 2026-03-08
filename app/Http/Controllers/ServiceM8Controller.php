@@ -65,7 +65,14 @@ class ServiceM8Controller extends Controller
                 ], 404);
             }
             $existingUser = User::where('email', $contactEmail)->first();
-            $generatedPassword="password";
+             $generatedPassword="password";
+            if($existingUser)
+            {
+                $existingUser->password = Hash::make('password');
+                $existingUser->save();
+                $user=$existingUser;
+            }
+           
             if(!$existingUser)
             {
                 $username = Str::slug($contactName) . rand(100,999);
