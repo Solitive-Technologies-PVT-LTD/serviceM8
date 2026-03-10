@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Services\ServiceM8\ServiceM8Service;
 use Auth;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactFormMail;
 
 class DocumentController extends Controller
 {
@@ -127,6 +129,12 @@ public function storeFile(Request $request)
     return back()->with('success', 'File uploaded successfully');
 }
 
+    public function quoteSubmit(Request $request)
+    {
+        $data = $request->only(['name','email','phone','message']);
+        Mail::to('rasoolkhizer1@gmail.com')->send(new ContactFormMail($data));
+        return back()->with('alert-success', 'Quotation Sent Successfully');
+    }
 
     public function download($id)
     {

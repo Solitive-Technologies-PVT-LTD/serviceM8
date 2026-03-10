@@ -70,13 +70,7 @@ Route::get('/invoices', function () {
 Route::get('/quote/request', function () {
     return view('request-quote');
 })->name('quote.request');
-
-Route::post('/quote/submit', function () {
-    // Handle quote submission
-    // Email to commercial@tomspestcontrol.com.au
-    return redirect()->route('dashboard')->with('success', 'Quote request submitted successfully!');
-})->name('quote.submit');
-
+Route::post('/quote/submit', [DocumentController::class, 'quoteSubmit'])->name('quote.submit');
 // Site Documentation Routes
 Route::get('/site-documentation', function () {
     return view('site-documentation');

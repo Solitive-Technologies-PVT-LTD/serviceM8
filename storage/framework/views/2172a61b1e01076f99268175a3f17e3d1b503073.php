@@ -1,14 +1,14 @@
-@extends('layouts.app1')
 
-@section('title', 'Request Quote - Tom\'s Pest Control')
 
-@section('content')
+<?php $__env->startSection('title', 'Request Quote - Tom\'s Pest Control'); ?>
+
+<?php $__env->startSection('content'); ?>
 <div class="max-w-2xl mx-auto">
    <div class="bg-white rounded-lg shadow-lg p-8">
         <h2 class="text-3xl font-bold text-gray-900 mb-8">Request Quote</h2>
 
-        <form method="POST" action="{{ route('quote.submit') }}">
-            @csrf
+        <form method="POST" action="<?php echo e(route('quote.submit')); ?>">
+            <?php echo csrf_field(); ?>
 
             <div class="mb-6">
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Name</label>
@@ -44,8 +44,10 @@
         </form>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 
+
+<?php echo $__env->make('layouts.app1', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\laravel-app\resources\views/request-quote.blade.php ENDPATH**/ ?>

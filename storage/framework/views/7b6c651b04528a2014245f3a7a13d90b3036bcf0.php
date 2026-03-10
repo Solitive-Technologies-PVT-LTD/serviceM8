@@ -1,25 +1,26 @@
-@extends($type == 'client' ? 'layouts.app1' : 'layouts.master')
 
-@section('pagetitle')
-    {{ $pagetitle ?? '' }}
-@endsection
 
-@section('css')
-@if($type != 'client')
-    @include('layouts.datatable_css')
-@endif
-@endsection
+<?php $__env->startSection('pagetitle'); ?>
+    <?php echo e($pagetitle ?? ''); ?>
 
-@section('content')
+<?php $__env->stopSection(); ?>
 
-@if($type != 'client')
-    @component('components.breadcrumb', [
+<?php $__env->startSection('css'); ?>
+<?php if($type != 'client'): ?>
+    <?php echo $__env->make('layouts.datatable_css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php endif; ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+<?php if($type != 'client'): ?>
+    <?php $__env->startComponent('components.breadcrumb', [
         'breadcrumbs' => $breadcrumbs,
         'pagetitle' => $pagetitle,
         'urls' => $urls
-    ])
-    @endcomponent
-@endif
+    ]); ?>
+    <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
 
 <div class="max-w-7xl mx-auto px-4">
 
@@ -32,8 +33,8 @@
                 SERVICE HISTORY
             </h3>
 
-            @forelse($completedJobs as $job)
-            @php
+            <?php $__empty_1 = true; $__currentLoopData = $completedJobs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $job): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+            <?php
                 $zeroDate = '0000-00-00 00:00:00';
 
                 $completionDate   = $job['completion_date'] ?? null;
@@ -46,31 +47,33 @@
                 } elseif (!empty($unsuccessfulDate) && $unsuccessfulDate !== $zeroDate) {
                     $displayDate = $unsuccessfulDate;
                 }
-            @endphp
+            ?>
 
-            @if($displayDate)
-                {{ \Carbon\Carbon::parse($displayDate)->format('M d, Y') }}
-            @endif
-               <a href="{{ route('servicem8.jobs.show', $job['uuid']) }}" 
+            <?php if($displayDate): ?>
+                <?php echo e(\Carbon\Carbon::parse($displayDate)->format('M d, Y')); ?>
+
+            <?php endif; ?>
+               <a href="<?php echo e(route('servicem8.jobs.show', $job['uuid'])); ?>" 
                        class="block bg-white rounded-lg p-3 shadow hover:shadow-md transition" style="margin-bottom:10px">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-900 font-medium mb-1">{{ $displayDate }}</p>
-                                <p class="text-gray-700 text-lg">{{$job['job_description']}}</p>
+                                <p class="text-gray-900 font-medium mb-1"><?php echo e($displayDate); ?></p>
+                                <p class="text-gray-700 text-lg"><?php echo e($job['job_description']); ?></p>
                             </div>
                             <div>
                                 <span class="bg-toms-green text-white px-4 py-2 rounded text-sm font-medium">
-                                     {{$job['status']}}
+                                     <?php echo e($job['status']); ?>
+
                                 </span>
                             </div>
                         </div>
                     </a>
             
-            @empty
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                 <div class="bg-white p-6 rounded shadow text-gray-500">
                     No completed jobs found.
                 </div>
-            @endforelse
+            <?php endif; ?>
         </div>
 
         <!-- RIGHT COLUMN -->
@@ -82,29 +85,33 @@
                     UPCOMING JOBS
                 </h3>
 
-                @forelse($upcomingJobs as $job)
+                <?php $__empty_1 = true; $__currentLoopData = $upcomingJobs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $job): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <div class="bg-white rounded-lg p-6 shadow mb-4">
                         <p class="text-gray-900 font-medium">
-                            {{ \Carbon\Carbon::parse($job['work_order_date'])->format('M d, Y') }}
+                            <?php echo e(\Carbon\Carbon::parse($job['work_order_date'])->format('M d, Y')); ?>
+
                         </p>
 
                         <p class="text-gray-700 text-lg mb-2">
-                            {{ $job['job_description'] ?? 'Scheduled Job' }}
+                            <?php echo e($job['job_description'] ?? 'Scheduled Job'); ?>
+
                         </p>
 
                         <p class="text-sm text-gray-500 mb-3">
-                            {{ $job['job_address'] }}
+                            <?php echo e($job['job_address']); ?>
+
                         </p>
 
                         <span class="bg-blue-800 text-white px-4 py-2 rounded text-sm">
-                             {{$job['status']}}
+                             <?php echo e($job['status']); ?>
+
                         </span>
                     </div>
-                @empty
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                     <div class="bg-white p-6 rounded shadow text-gray-500">
                         No upcoming jobs scheduled.
                     </div>
-                @endforelse
+                <?php endif; ?>
             </div>
 
             <!-- QUICK ACTIONS -->
@@ -114,17 +121,17 @@
                 </h3>
 
                 <div class="space-y-3">
-                    <a href="{{route('quote.request')}}"
+                    <a href="<?php echo e(route('quote.request')); ?>"
                        class="block bg-toms-green hover:bg-green-700 text-white text-center py-3 rounded">
                         Request Quote
                     </a>
 
-                    <a href="{{ route('client.invoices.show', $companyUuid) }}"
+                    <a href="<?php echo e(route('client.invoices.show', $companyUuid)); ?>"
                        class="block bg-toms-green hover:bg-green-700 text-white text-center py-3 rounded">
                         View Invoices
                     </a>
 
-                    <a href="{{ route('client.document.show', $companyUuid) }}"
+                    <a href="<?php echo e(route('client.document.show', $companyUuid)); ?>"
                        class="block bg-toms-green hover:bg-green-700 text-white text-center py-3 rounded">
                         Site Documentation
                     </a>
@@ -139,4 +146,6 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make($type == 'client' ? 'layouts.app1' : 'layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\laravel-app\resources\views/servicem8/clientJobs/index.blade.php ENDPATH**/ ?>
