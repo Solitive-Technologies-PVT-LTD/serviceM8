@@ -217,9 +217,19 @@ public function clientSiteDocument($uuid, $folderId = null)
             '$filter' => "company_uuid eq '$uuid' and status eq 'Completed'",
             '$orderby' => 'date desc'
         ]);
+          $invoices = [];
+        
+        foreach ($jobs as $job) {
+            
+            $attachments = $this->service->getInvoiceAttachments($job['uuid']);
+
+            if(!empty($attachments)){
+                $invoices = array_merge($invoices, $attachments);
+            }
+        }   
          $type=Auth::user()->type =="client";
         return view('client.invoices.index', compact(
-           'jobs','uuid','type'
+           'invoices','uuid','type','jobs'
         ));
         
     }

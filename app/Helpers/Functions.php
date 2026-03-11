@@ -44,6 +44,26 @@ if (!function_exists("optionForEachSelected")) {
     }
 }
 
+
+function getIconImage($fileType){
+    $fileType = strtolower($fileType);
+
+    if(str_contains($fileType,'pdf'))
+        return 'https://cdn-icons-png.flaticon.com/512/337/337946.png';
+
+    if(str_contains($fileType,'jpg') || str_contains($fileType,'png') || str_contains($fileType,'jpeg'))
+        return 'https://cdn-icons-png.flaticon.com/512/136/136524.png';
+
+    if(str_contains($fileType,'doc'))
+        return 'https://cdn-icons-png.flaticon.com/512/337/337932.png';
+
+    if(str_contains($fileType,'xls'))
+        return 'https://cdn-icons-png.flaticon.com/512/337/337948.png';
+
+    return 'https://cdn-icons-png.flaticon.com/512/109/109612.png';
+}
+
+
 function get_setting($key)
 {
     $setting = Setting::where('key',$key)->first();

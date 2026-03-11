@@ -117,6 +117,15 @@ class ServiceM8Service
         return $this->get('invoice.json', $params);
     }
 
+    public function getInvoiceAttachments($jobUuid)
+    {
+        $params = [
+            '$filter' => "related_object eq 'job' and related_object_uuid eq '$jobUuid' and attachment_source eq 'INVOICE'"
+        ];
+
+        return $this->get('attachment.json', $params);
+    }
+
     public function getJobAttachments(string $jobUuid, string $cursor = '-1', int $limit = 20)
     {
          $params = [

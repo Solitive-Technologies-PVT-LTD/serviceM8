@@ -1,10 +1,10 @@
-@extends($type == 'client' ? 'layouts.app1' : 'layouts.master')
+
 
 
 <!-- FontAwesome for icons -->
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
     body {
@@ -108,13 +108,13 @@
     object-fit: contain;
     display: block;
     margin-bottom: 0.5rem;
-    }
-    .attachment-card .attachment-name {
-        font-size: 0.9rem;
-        font-weight: 500;
-        margin-bottom: 0.5rem;
-        word-break: break-word;
-    }
+}
+.attachment-card .attachment-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    word-break: break-word;
+}
 
    
 
@@ -145,40 +145,41 @@
 <div class="job-container">
     <!-- Header -->
     <div class="job-header">
-        <h2>Job Preview - {{ $job['generated_job_id'] ?? $job['uuid'] }}</h2>
-        <span class="badge {{ $job['active'] ? 'bg-success' : 'bg-danger' }}">
-            {{ $job['active'] ? 'Active' : 'Inactive' }}
+        <h2>Job Preview - <?php echo e($job['generated_job_id'] ?? $job['uuid']); ?></h2>
+        <span class="badge <?php echo e($job['active'] ? 'bg-success' : 'bg-danger'); ?>">
+            <?php echo e($job['active'] ? 'Active' : 'Inactive'); ?>
+
         </span>
     </div>
 
     <!-- Job Information Sections -->
     <div class="job-section job-details">
         <h3>Job Details</h3>
-        <div class="detail"><div class="label">Date:</div> {{ $job['work_order_date'] ?? '—' }}</div>
-        <div class="detail"><div class="label">Status:</div> {{ $job['status'] ?? '—' }}</div>
-        <div class="detail"><div class="label">Job Address:</div> {{ $job['job_address'] ?? '—' }}</div>
-        <div class="detail"><div class="label">Job Description:</div> {{ $job['job_description'] ?? '—' }}</div>
-        <div class="detail"><div class="label">Work Done:</div> {{ $job['work_done_description'] ?? '—' }}</div>
-        <div class="detail"><div class="label">Generated ID:</div> {{ $job['generated_job_id'] ?? '—' }}</div>
+        <div class="detail"><div class="label">Date:</div> <?php echo e($job['work_order_date'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Status:</div> <?php echo e($job['status'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Job Address:</div> <?php echo e($job['job_address'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Job Description:</div> <?php echo e($job['job_description'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Work Done:</div> <?php echo e($job['work_done_description'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Generated ID:</div> <?php echo e($job['generated_job_id'] ?? '—'); ?></div>
     </div>
 
     <div class="job-section job-details">
         <h3>Payment & Invoice</h3>
-        <div class="detail"><div class="label">Total Invoice Amount:</div> ${{ number_format((float)$job['total_invoice_amount'], 2) ?? '—' }}</div>
-        <div class="detail"><div class="label">Payment Received:</div> {{ $job['payment_received'] ?? '—' }}</div>
-        <div class="detail"><div class="label">Payment Date:</div> {{ $job['payment_date'] ?? '—' }}</div>
-        <div class="detail"><div class="label">Payment Method:</div> {{ $job['payment_method'] ?? '—' }}</div>
-        <div class="detail"><div class="label">Completion Date:</div> {{ $job['completion_date'] ?? '—' }}</div>
+        <div class="detail"><div class="label">Total Invoice Amount:</div> $<?php echo e(number_format((float)$job['total_invoice_amount'], 2) ?? '—'); ?></div>
+        <div class="detail"><div class="label">Payment Received:</div> <?php echo e($job['payment_received'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Payment Date:</div> <?php echo e($job['payment_date'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Payment Method:</div> <?php echo e($job['payment_method'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Completion Date:</div> <?php echo e($job['completion_date'] ?? '—'); ?></div>
     </div>
 
     <!-- <div class="job-section job-details">
         <h3>Location & Queue</h3>
-        <div class="detail"><div class="label">Geo Country:</div> {{ $job['geo_country'] ?? '—' }}</div>
-        <div class="detail"><div class="label">Geo State:</div> {{ $job['geo_state'] ?? '—' }}</div>
-        <div class="detail"><div class="label">Geo City:</div> {{ $job['geo_city'] ?? '—' }}</div>
-        <div class="detail"><div class="label">Geo Street:</div> {{ $job['geo_street'] ?? '—' }}</div>
-        <div class="detail"><div class="label">Queue UUID:</div> {{ $job['queue_uuid'] ?? '—' }}</div>
-        <div class="detail"><div class="label">Queue Assigned Staff:</div> {{ $job['queue_assigned_staff_uuid'] ?? '—' }}</div>
+        <div class="detail"><div class="label">Geo Country:</div> <?php echo e($job['geo_country'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Geo State:</div> <?php echo e($job['geo_state'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Geo City:</div> <?php echo e($job['geo_city'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Geo Street:</div> <?php echo e($job['geo_street'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Queue UUID:</div> <?php echo e($job['queue_uuid'] ?? '—'); ?></div>
+        <div class="detail"><div class="label">Queue Assigned Staff:</div> <?php echo e($job['queue_assigned_staff_uuid'] ?? '—'); ?></div>
     </div> -->
 
     <!-- Attachments -->
@@ -188,11 +189,11 @@
         <div id="loadMoreAttachments" class="btn-load-more" style="display:none;">Load More</div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 <script>
-const jobUuid = "{{ $job['uuid'] }}";
+const jobUuid = "<?php echo e($job['uuid']); ?>";
 let attachmentsCursor = '-1';
 const attachmentsContainer = document.getElementById('attachments');
 const loadMoreBtn = document.getElementById('loadMoreAttachments');
@@ -213,7 +214,7 @@ function getIconImage(fileType) {
 
 // Fetch attachments
 function fetchAttachments() {
-    fetch(`{{ url('servicem8/jobs') }}/${jobUuid}/attachments?cursor=${attachmentsCursor}`)
+    fetch(`<?php echo e(url('servicem8/jobs')); ?>/${jobUuid}/attachments?cursor=${attachmentsCursor}`)
     .then(res => res.json())
     .then(data => {
         const attachments = Array.isArray(data) ? data : (data.data || []);
@@ -225,7 +226,7 @@ function fetchAttachments() {
             div.innerHTML = `
                <img src="${getIconImage(att.file_type)}" alt="file icon" style="width:48px; height:48px; margin-bottom:0.5rem;">
                 <div class="attachment-name">${att.attachment_name}${att.file_type}</div>
-                <a href="{{ url('servicem8/attachment/download') }}/${att.uuid}" target="_blank">Download</a>
+                <a href="<?php echo e(url('servicem8/attachment/download')); ?>/${att.uuid}" target="_blank">Download</a>
             `;
             attachmentsContainer.appendChild(div);
         });
@@ -246,4 +247,6 @@ fetchAttachments();
 // Load more
 loadMoreBtn.addEventListener('click', fetchAttachments);
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make($type == 'client' ? 'layouts.app1' : 'layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\laravel-app\resources\views/servicem8/jobs/show.blade.php ENDPATH**/ ?>
