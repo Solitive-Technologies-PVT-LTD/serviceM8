@@ -136,7 +136,7 @@
                         Site Documentation
                     </a>
 
-                    <a target="_blank" href="https://tomspestcontrol.com.au/"
+                    <a  href="<?php echo e(route('contact')); ?>"
                        class="block bg-toms-green hover:bg-green-700 text-white text-center py-3 rounded">
                         Contact Information
                     </a>

@@ -1,5 +1,5 @@
-@extends('layouts.app1')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="max-w-4xl mx-auto">
     <div class="bg-white rounded-lg shadow-lg p-8">
         <h2 class="text-3xl font-bold text-gray-900 mb-8">Contact Information</h2>
@@ -72,8 +72,10 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 
+
+<?php echo $__env->make('layouts.app1', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\laravel-app\resources\views/contact.blade.php ENDPATH**/ ?>
