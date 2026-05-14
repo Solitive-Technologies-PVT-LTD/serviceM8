@@ -53,8 +53,8 @@ class ServiceM8Controller extends Controller
         if(count($company_contact) > 0)
         {    
             // Example dummy email
-          //  $contactEmail = $company_contact['email'];
-            $contactEmail='rasoolkhizer1@gmail.com';
+            $contactEmail = $company_contact['email'];
+         //   $contactEmail='rasoolkhizer1@gmail.com';
             $contactName   = $company_contact['first'] ." ".$company_contact['last'];             
             $contactPhone = $company_contact['mobile'];
 
