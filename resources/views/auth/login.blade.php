@@ -38,11 +38,7 @@
                     placeholder="Enter your password (optional for demo)">
             </div>
 
-            <div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                <p class="text-sm text-blue-800 text-center">
-                    <strong>Demo Mode:</strong> Any email/password will work, or use the Demo Login button below
-                </p>
-            </div>
+           
 
             <button type="submit" class="w-full bg-toms-green hover:bg-green-700 text-white font-medium py-3 rounded-lg transition">
                 Log In
