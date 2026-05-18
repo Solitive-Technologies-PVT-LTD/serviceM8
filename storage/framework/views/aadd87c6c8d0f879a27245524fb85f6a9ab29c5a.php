@@ -26,21 +26,17 @@
                 <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
                 <input type="email" id="email" name="email" 
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-toms-green focus:border-transparent"
-                    placeholder="your.email@example.com (optional for demo)">
+                    placeholder="your.email@example.com">
             </div>
 
             <div class="mb-6">
                 <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
                 <input type="password" id="password" name="password" 
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-toms-green focus:border-transparent"
-                    placeholder="Enter your password (optional for demo)">
+                    placeholder="Enter your password ">
             </div>
 
-            <div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                <p class="text-sm text-blue-800 text-center">
-                    <strong>Demo Mode:</strong> Any email/password will work, or use the Demo Login button below
-                </p>
-            </div>
+           
 
             <button type="submit" class="w-full bg-toms-green hover:bg-green-700 text-white font-medium py-3 rounded-lg transition">
                 Log In

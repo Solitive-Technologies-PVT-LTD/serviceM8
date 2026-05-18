@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Hash;
 
 class UserController extends Controller
 {
@@ -218,5 +219,44 @@ class UserController extends Controller
            
             return redirect('users')->with('alert-error', 'User Creation Failed');
         }
+    }
+    
+    public function changePassword()
+    {
+        return view('auth.changePassword');
+    }
+
+    public function changePasswordupdate(Request $request)
+    {
+       $request->validate(
+            [
+                'current_password' => 'required',
+                'new_password' => 'required|min:8|confirmed',
+            ],
+            [
+                'current_password.required' => 'Please enter your current password.',
+
+                'new_password.required' => 'Please enter a new password.',
+                'new_password.min' => 'New password must be at least 8 characters long.',
+                'new_password.confirmed' => 'New password confirmation does not match.',
+            ]
+        );
+
+        // Check if current password matches
+        if (!Hash::check($request->current_password, Auth::user()->password)) {
+
+            return redirect()->back()->withErrors([
+                'current_password' => 'Current password is incorrect.'
+            ])->withInput();
+        }
+
+        // Update password
+        $user = Auth::user();
+
+        $user->password = Hash::make($request->new_password);
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Password updated successfully.');
     }
 }

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DocumentController;
  use App\Http\Controllers\ServiceM8Controller;
+ use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -213,5 +215,9 @@ Route::prefix('servicem8')->as('servicem8.')->group(function () {
     Route::get('/client/{client_uuid}/documents/tag/{tagName}', [DocumentController::class, 'clientSiteDocumentByTag'])
     ->name('client.document.byTag');
 
-    
+    Route::get('/change-password', [UserController::class, 'changePassword'])
+        ->name('password.change');
+
+    Route::post('/change-password', [UserController::class, 'changePasswordupdate'])
+        ->name('password.update');
 });
