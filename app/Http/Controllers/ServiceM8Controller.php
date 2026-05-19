@@ -35,71 +35,79 @@ class ServiceM8Controller extends Controller
     // }
     public function createUserFromCompany(Request $request)
     {
-        
-        $companyUUID = $request->company_uuid;
-        
-        if (!$companyUUID) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Company UUID missing'
-            ], 400);
-        }
-        $company_contact = $this->service->getCompanyContact([
-            '$filter' => "company_uuid eq '$companyUUID'",
-        ]);
-        if (!empty($company_contact)) {
-            $company_contact = collect($company_contact)->firstWhere('is_primary_contact', '1');
-        }
-        if(count($company_contact) > 0)
-        {    
-            // Example dummy email
-            $contactEmail = $company_contact['email'];
-         //   $contactEmail='rasoolkhizer1@gmail.com';
-            $contactName   = $company_contact['first'] ." ".$company_contact['last'];             
-            $contactPhone = $company_contact['mobile'];
-
-            if (!$contactEmail) {
+        try{
+            $companyUUID = $request->company_uuid;
+            
+            if (!$companyUUID) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Company email not found'
-                ], 404);
+                    'message' => 'Company UUID missing'
+                ], 400);
             }
-            $existingUser = User::where('email', $contactEmail)->first();
-             $generatedPassword="password";
-            if($existingUser)
-            {
-                $existingUser->password = Hash::make('password');
-                $existingUser->save();
-                $user=$existingUser;
-            }
-           
-            if(!$existingUser)
-            {
-                $username = Str::slug($contactName) . rand(100,999);
-              // Create a new user instance
-                $user = new User();
-                $user->username = $username;
-                $user->name = $contactName;
-                $user->contact_number = $contactPhone;
-                $user->email = $contactEmail;
-                $user->type = 'client';
-                $user->servicem8_company_uuid = $companyUUID;
-                $user->password = Hash::make('password');
-                $user->created_at = time();
-                $user->updated_at = time();
-                $user->is_active = 'Yes';
-                $user->password_reset_required = 'Yes';
-
-                // Save to database
-                $user->save();
-            }
-            $loginUrl = 'https://portal.tomspestcontrol.com.au/login';
-            Mail::to($contactEmail)->send(new UserCreatedMail($contactEmail, $generatedPassword, $loginUrl));
-            return response()->json([
-                'status' => true,
-                'message' => 'User created successfully',
-                'user_id' => $user->id
+            $company_contact = $this->service->getCompanyContact([
+                '$filter' => "company_uuid eq '$companyUUID'",
             ]);
+            if (!empty($company_contact)) {
+                $company_contact = collect($company_contact)->firstWhere('is_primary_contact', '1');
+            }
+            if(count($company_contact) > 0)
+            {    
+                // Example dummy email
+                $contactEmail = $company_contact['email'];
+            //   $contactEmail='rasoolkhizer1@gmail.com';
+                $contactName   = $company_contact['first'] ." ".$company_contact['last'];             
+                $contactPhone = $company_contact['mobile'];
+
+                if (!$contactEmail) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Company email not found'
+                    ], 404);
+                }
+                $existingUser = User::where('email', $contactEmail)->first();
+                $generatedPassword="password";
+                if($existingUser)
+                {
+                    $existingUser->password = Hash::make('password');
+                    $existingUser->save();
+                    $user=$existingUser;
+                }
+            
+                if(!$existingUser)
+                {
+                    $username = Str::slug($contactName) . rand(100,999);
+                // Create a new user instance
+                    $user = new User();
+                    $user->username = $username;
+                    $user->name = $contactName;
+                    $user->contact_number = $contactPhone;
+                    $user->email = $contactEmail;
+                    $user->type = 'client';
+                    $user->servicem8_company_uuid = $companyUUID;
+                    $user->password = Hash::make('password');
+                    $user->created_at = time();
+                    $user->updated_at = time();
+                    $user->is_active = 'Yes';
+                    $user->password_reset_required = 'Yes';
+
+                    // Save to database
+                    $user->save();
+                }
+                $loginUrl = 'https://portal.tomspestcontrol.com.au/login';
+                Mail::to($contactEmail)->send(new UserCreatedMail($contactEmail, $generatedPassword, $loginUrl));
+                return response()->json([
+                    'status' => true,
+                    'message' => 'User created successfully',
+                    'user_id' => $user->id
+                ]);
+            }
+        }
+            catch (\Exception $e) {
+             return response()->json([
+                'status' => 'error',
+                'message' => 'Exception occurred',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 
