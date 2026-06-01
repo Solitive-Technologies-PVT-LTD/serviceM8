@@ -32,7 +32,6 @@
                     <option value="Completed">Completed</option>
                     <option value="Quote" {{ request('status') == 'Quote' ? 'selected' : '' }}>Quote</option>
                     <option value="Work Order" {{ request('status') == 'Work Order' ? 'selected' : '' }}>Work Order</option>
-                    
                     <option value="Unsuccessful" {{ request('status') == 'Unsuccessful' ? 'selected' : '' }}>Unsuccessful</option>
                     <option value="Cancelled" {{ request('status') == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
                 </select>

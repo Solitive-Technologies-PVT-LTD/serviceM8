@@ -517,7 +517,7 @@ class ServiceM8Controller extends Controller
             $filters = [];
 
             // 🔹 Date filter (fixed from Jan 1, 2026)
-           $tenDaysAgo = date('Y-m-d', strtotime('-5 days'));
+           $tenDaysAgo = date('Y-m-d', strtotime('-10 days'));
 
             $filters[] = "edit_date gt '{$tenDaysAgo}'";
 
