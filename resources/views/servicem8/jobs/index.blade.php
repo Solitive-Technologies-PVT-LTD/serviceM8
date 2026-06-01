@@ -43,7 +43,7 @@
                 <input type="date"
                        name="date_from"
                        class="form-control"
-                       value="{{ request('date_from', '2026-01-20') }}">
+                       value="{{ request('date_from', $date) }}">
             </div>
 
             <div class="col-md-2 align-self-end">

@@ -580,11 +580,12 @@ class ServiceM8Controller extends Controller
                 ->rawColumns(['payment_received', 'actions'])
                 ->make(true);
         }
-
+        $date = date('Y-m-d', strtotime('-10 days'));
         return view('servicem8.jobs.index', compact(
             'pagetitle',
             'breadcrumbs',
-            'urls'
+            'urls',
+            'date'
         ));
     }
 
