@@ -29,10 +29,10 @@
             <div class="col-md-3">
                 <label class="form-label">Status</label>
                 <select name="status" class="form-select">
-                    <option value="">All</option>
+                    <option value="Completed">Completed</option>
                     <option value="Quote" {{ request('status') == 'Quote' ? 'selected' : '' }}>Quote</option>
                     <option value="Work Order" {{ request('status') == 'Work Order' ? 'selected' : '' }}>Work Order</option>
-                    <option value="Completed" {{ request('status') == 'Completed' ? 'selected' : '' }}>Completed</option>
+                    
                     <option value="Unsuccessful" {{ request('status') == 'Unsuccessful' ? 'selected' : '' }}>Unsuccessful</option>
                     <option value="Cancelled" {{ request('status') == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
                 </select>
