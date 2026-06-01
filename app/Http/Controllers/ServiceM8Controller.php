@@ -517,10 +517,10 @@ class ServiceM8Controller extends Controller
             $filters = [];
 
             // 🔹 Date filter (fixed from Jan 1, 2026)
-           $tenDaysAgo = date('Y-m-d', strtotime('-7 days'));
+       
             
             $filters[] = "edit_date gt '{$request->date_from}'";
-
+            $filters[] = "edit_date lt '{$request->date_end}'";
             // 🔹 Staff filter
             if ($request->filled('staff_uuid')) {
                 $filters[] = "queue_assigned_staff_uuid eq '{$request->staff_uuid}'";
@@ -580,7 +580,7 @@ class ServiceM8Controller extends Controller
                 ->rawColumns(['payment_received', 'actions'])
                 ->make(true);
         }
-        $date = date('Y-m-d', strtotime('-10 days'));
+        $date = date('Y-m-d', strtotime('-7 days'));
         $current_date=date('Y-m-d');
         return view('servicem8.jobs.index', compact(
             'pagetitle',
