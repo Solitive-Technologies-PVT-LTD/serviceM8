@@ -535,7 +535,7 @@ class ServiceM8Controller extends Controller
                 '$orderby' => 'edit_date desc',
                 '$filter'  => implode(' and ', $filters),
             ];
-
+            dd($filters);
             $jobs = $this->service->getJobs($params);
 
             return DataTables::of($jobs)
