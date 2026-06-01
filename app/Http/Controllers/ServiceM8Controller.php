@@ -581,12 +581,13 @@ class ServiceM8Controller extends Controller
                 ->make(true);
         }
         $date = date('Y-m-d', strtotime('-10 days'));
-        $current_data=date('Y-m-d');
+        $current_date=date('Y-m-d');
         return view('servicem8.jobs.index', compact(
             'pagetitle',
             'breadcrumbs',
             'urls',
-            'date'
+            'date',
+            'current_date'
         ));
     }
 
