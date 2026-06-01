@@ -135,7 +135,7 @@ $(function () {
             let diffDays  = diffTime / (1000 * 60 * 60 * 24);
 
             if (diffDays > 7) {
-                alert("Date range cannot exceed 10 days.");
+                alert("Date range cannot exceed 7 days.");
                 return false;
             }
 
