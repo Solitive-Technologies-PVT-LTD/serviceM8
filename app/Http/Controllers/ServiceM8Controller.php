@@ -518,8 +518,8 @@ class ServiceM8Controller extends Controller
 
             // 🔹 Date filter (fixed from Jan 1, 2026)
            $tenDaysAgo = date('Y-m-d', strtotime('-7 days'));
-
-            $filters[] = "edit_date gt '{$tenDaysAgo}'";
+            
+            $filters[] = "edit_date gt '{$request->date_from}'";
 
             // 🔹 Staff filter
             if ($request->filled('staff_uuid')) {
