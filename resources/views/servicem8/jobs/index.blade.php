@@ -45,6 +45,13 @@
                        class="form-control"
                        value="{{ request('date_from', $date) }}">
             </div>
+            <div class="col-md-3">
+                <label class="form-label">Date End</label>
+                <input type="date"
+                       name="date_end"
+                       class="form-control"
+                       value="{{ request('date_end', $current_date) }}">
+            </div>
 
             <div class="col-md-2 align-self-end">
                 <button type="submit" class="btn btn-primary w-100">
@@ -97,6 +104,8 @@ $(function () {
                 d.staff_uuid = $('input[name=staff_uuid]').val();
                 d.status     = $('select[name=status]').val();
                 d.date_from  = $('input[name=date_from]').val();
+                d.date_end  = $('input[name=date_end]').val();
+
             }
         },
         columns: [
@@ -113,8 +122,32 @@ $(function () {
 
     // Apply filters on submit
     $('#jobFilterForm').on('submit', function (e) {
-        e.preventDefault();
+          e.preventDefault();
+
+        let from = $('input[name="date_from"]').val();
+        let to   = $('input[name="date_end"]').val();
+
+        if (from && to) {
+            let start = new Date(from);
+            let end   = new Date(to);
+
+            let diffTime = end - start;
+            let diffDays  = diffTime / (1000 * 60 * 60 * 24);
+
+            if (diffDays > 10) {
+                alert("Date range cannot exceed 10 days.");
+                return false;
+            }
+
+            if (diffDays < 0) {
+                alert("Date End cannot be before Date From.");
+                return false;
+            }
+        }
+
         table.ajax.reload();
+
+        
     });
 
 });
