@@ -44,7 +44,7 @@
                 <ul class="dropdown-menu dropdown-menu-end mt-2 min-w-[160px] bg-white border border-gray-200 rounded shadow-lg p-1" aria-labelledby="userDropdown">
                     <li>
                         <a href="<?php echo e(route('password.change')); ?>"
-                        class="block w-full text-left px-2  py-2 text-gray-700 hover:bg-gray-100 rounded">
+                        class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded">
                             Change Password
                         </a>
                     </li>
