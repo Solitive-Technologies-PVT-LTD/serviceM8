@@ -1,11 +1,12 @@
-@extends('layouts.master')
 
-@section('pagetitle')
-    {{ $pagetitle }}
-@endsection
 
-@section('css')
-    @include('layouts.datatable_css')
+<?php $__env->startSection('pagetitle'); ?>
+    <?php echo e($pagetitle); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
+    <?php echo $__env->make('layouts.datatable_css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <style>
         .avatar-sm {
             width: 36px;
@@ -24,11 +25,11 @@
             white-space: nowrap;
         }
     </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
-@component('components.breadcrumb', ['breadcrumbs' => $breadcrumbs, 'pagetitle' => $pagetitle, 'urls' => $urls])
-@endcomponent
+<?php $__env->startSection('content'); ?>
+<?php $__env->startComponent('components.breadcrumb', ['breadcrumbs' => $breadcrumbs, 'pagetitle' => $pagetitle, 'urls' => $urls]); ?>
+<?php echo $__env->renderComponent(); ?>
 
 <div class="row">
     <div class="col-lg-12">
@@ -72,10 +73,10 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
-    @include('layouts.datatable_js')
+<?php $__env->startSection('script'); ?>
+    <?php echo $__env->make('layouts.datatable_js', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
     <script>
        $(function () {
@@ -94,7 +95,7 @@
         dom: 'Bfrtip',
         buttons: [{ extend: 'colvis' }],
         ajax: {
-                url: "{{ route('servicem8.clients') }}",
+                url: "<?php echo e(route('servicem8.clients')); ?>",
                 data: function (d) {
                     d.name_search = $('#name_search').val();
                 }
@@ -148,4 +149,6 @@
         });
     });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\laravel-app\resources\views/servicem8/clients/index.blade.php ENDPATH**/ ?>

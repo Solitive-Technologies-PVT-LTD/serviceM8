@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserCreatedMail;
+ use Illuminate\Support\Facades\DB;
 class ServiceM8Controller extends Controller
 {
     protected ServiceM8Service $service;
@@ -111,66 +112,129 @@ class ServiceM8Controller extends Controller
         }
     }
 
-        public function clients(Request $request)
-        {
-            $pagetitle   = "Clients";
-            $breadcrumbs = ["Dashboard", "Clients"];
-            $urls        = ['/home', '/servicem8/clients'];
+        // public function clients(Request $request)
+        // {
+        //     $pagetitle   = "Clients";
+        //     $breadcrumbs = ["Dashboard", "Clients"];
+        //     $urls        = ['/home', '/servicem8/clients'];
 
-            if ($request->ajax()) {
+        //     if ($request->ajax()) {
 
-                // Fetch clients safely from ServiceM8 (use filtering to avoid timeout)
-              $tenDaysAgo = date('Y-m-d', strtotime('-10 days'));
+        //         // Fetch clients safely from ServiceM8 (use filtering to avoid timeout)
+        //       $tenDaysAgo = date('Y-m-d', strtotime('-10 days'));
 
-                $clients = $this->service->getClients([
-                    '$filter' => "edit_date gt '{$tenDaysAgo}'"
-                ]);
-                return DataTables::of($clients)
+        //         $clients = $this->service->getClients([
+        //             '$filter' => "edit_date gt '{$tenDaysAgo}'"
+        //         ]);
+        //         return DataTables::of($clients)
+        //         ->addColumn('initials', function ($client) {
+        //             $name = $client['name'] ?? '';
+        //             $parts = explode(' ', $name);
+        //             return strtoupper(
+        //                 substr($parts[0] ?? '', 0, 1) .
+        //                 substr($parts[1] ?? '', 0, 1)
+        //             );
+        //         })
+        //         ->editColumn('name', fn ($c) => $c['name'] ?? '—')
+        //         ->editColumn('abn_number', fn ($c) => $c['abn_number'] ?: '—')
+        //         ->editColumn('address', fn ($c) =>
+        //             implode(', ', array_filter([
+        //                 $c['address_street'] ?? '',
+        //                 $c['address_city'] ?? '',
+        //                 $c['address_state'] ?? '',
+        //                 $c['address_postcode'] ?? '',
+        //                 $c['address_country'] ?? ''
+        //             ])) ?: ($c['address'] ?? '—')
+        //         )
+        //         ->editColumn('billing_address', fn ($c) => $c['billing_address'] ?: '—')
+        //         ->editColumn('website', fn ($c) => $c['website'] ?: '—')
+        //         ->editColumn('is_individual', fn ($c) => $c['is_individual'] ? 'Individual' : 'Company')
+        //         ->editColumn('fax_number', fn ($c) => $c['fax_number'] ?: '—')
+        //         ->editColumn('badges', fn ($c) => $c['badges'] ?: '—')
+        //         ->editColumn('tax_rate_uuid', fn ($c) => $c['tax_rate_uuid'] ?: '—')
+        //         ->editColumn('billing_attention', fn ($c) => $c['billing_attention'] ?: '—')
+        //         ->editColumn('payment_terms', fn ($c) => $c['payment_terms'] ?: '—')
+        //         ->editColumn('active', fn ($c) =>
+        //             $c['active'] ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Inactive</span>'
+        //         )
+        //         ->editColumn('edit_date', fn ($c) => $c['edit_date'] ?? '—')
+        //        ->addColumn('actions', function ($c) {
+        //         return '
+        //             <a href="' . route('company.clientJobs', $c['uuid']) . '"
+        //                class="btn btn-sm btn-primary">
+        //                 View
+        //             </a>
+        //             ';
+        //         })
+        //         ->rawColumns(['active', 'actions'])
+        //         ->make(true);
+        //     }
+            
+        //     return view('servicem8.clients.index', compact('pagetitle', 'breadcrumbs', 'urls'));
+        // }
+
+   
+
+    public function clients(Request $request)
+    {
+        $pagetitle   = "Clients";
+        $breadcrumbs = ["Dashboard", "Clients"];
+        $urls        = ['/home', '/servicem8/clients'];
+
+        if ($request->ajax()) {
+
+            $query = DB::table('servicem8_clients')
+                    ->orderBy('edit_date', 'desc');
+
+            if ($request->filled('name_search')) {
+                    $query->where('name', 'like', '%' . $request->input('name_search') . '%');
+            }   
+            return DataTables::of($query)
                 ->addColumn('initials', function ($client) {
-                    $name = $client['name'] ?? '';
+                    $name = $client->name ?? '';
                     $parts = explode(' ', $name);
                     return strtoupper(
                         substr($parts[0] ?? '', 0, 1) .
                         substr($parts[1] ?? '', 0, 1)
                     );
                 })
-                ->editColumn('name', fn ($c) => $c['name'] ?? '—')
-                ->editColumn('abn_number', fn ($c) => $c['abn_number'] ?: '—')
+                ->editColumn('name', fn ($c) => $c->name ?? '—')
+                ->editColumn('abn_number', fn ($c) => $c->abn_number ?: '—')
                 ->editColumn('address', fn ($c) =>
                     implode(', ', array_filter([
-                        $c['address_street'] ?? '',
-                        $c['address_city'] ?? '',
-                        $c['address_state'] ?? '',
-                        $c['address_postcode'] ?? '',
-                        $c['address_country'] ?? ''
-                    ])) ?: ($c['address'] ?? '—')
+                        $c->address_street,
+                        $c->address_city,
+                        $c->address_state,
+                        $c->address_postcode,
+                        $c->address_country,
+                    ])) ?: '—'
                 )
-                ->editColumn('billing_address', fn ($c) => $c['billing_address'] ?: '—')
-                ->editColumn('website', fn ($c) => $c['website'] ?: '—')
-                ->editColumn('is_individual', fn ($c) => $c['is_individual'] ? 'Individual' : 'Company')
-                ->editColumn('fax_number', fn ($c) => $c['fax_number'] ?: '—')
-                ->editColumn('badges', fn ($c) => $c['badges'] ?: '—')
-                ->editColumn('tax_rate_uuid', fn ($c) => $c['tax_rate_uuid'] ?: '—')
-                ->editColumn('billing_attention', fn ($c) => $c['billing_attention'] ?: '—')
-                ->editColumn('payment_terms', fn ($c) => $c['payment_terms'] ?: '—')
+                ->editColumn('billing_address', fn ($c) => $c->billing_address ?: '—')
+                ->editColumn('website', fn ($c) => $c->website ?: '—')
+                ->editColumn('is_individual', fn ($c) => $c->is_individual ? 'Individual' : 'Company')
+                ->editColumn('fax_number', fn ($c) => $c->fax_number ?: '—')
+                ->editColumn('badges', fn ($c) => $c->badges ?: '—')
+                ->editColumn('tax_rate_uuid', fn ($c) => $c->tax_rate_uuid ?: '—')
+                ->editColumn('billing_attention', fn ($c) => $c->billing_attention ?: '—')
+                ->editColumn('payment_terms', fn ($c) => $c->payment_terms ?: '—')
                 ->editColumn('active', fn ($c) =>
-                    $c['active'] ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Inactive</span>'
+                    $c->active ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Inactive</span>'
                 )
-                ->editColumn('edit_date', fn ($c) => $c['edit_date'] ?? '—')
-               ->addColumn('actions', function ($c) {
-                return '
-                    <a href="' . route('company.clientJobs', $c['uuid']) . '"
-                       class="btn btn-sm btn-primary">
-                        View
-                    </a>
-                    ';
+                ->editColumn('edit_date', fn ($c) => $c->edit_date ?? '—')
+                ->addColumn('actions', function ($c) {
+                    return '
+                        <a href="' . route('company.clientJobs', $c->uuid) . '"
+                        class="btn btn-sm btn-primary">
+                            View
+                        </a>
+                        ';
                 })
                 ->rawColumns(['active', 'actions'])
                 ->make(true);
-            }
-            
-            return view('servicem8.clients.index', compact('pagetitle', 'breadcrumbs', 'urls'));
         }
+
+        return view('servicem8.clients.index', compact('pagetitle', 'breadcrumbs', 'urls'));
+    }
 
 
     public function clientJobs(Request $request, string $companyUuid)
