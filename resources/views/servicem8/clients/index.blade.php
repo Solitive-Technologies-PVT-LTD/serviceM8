@@ -91,7 +91,7 @@
         pageLength: 50,
         pagingType: "full_numbers",
         order: [[11, 'desc']], // edit_date column (fixed index)
-        dom: 'Bfrtip',
+        dom: 'Brtip',
         buttons: [{ extend: 'colvis' }],
         ajax: {
                 url: "{{ route('servicem8.clients') }}",
