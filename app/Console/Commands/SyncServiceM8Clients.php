@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class SyncServiceM8Clients extends Command
@@ -16,7 +17,8 @@ class SyncServiceM8Clients extends Command
     {
         $this->info('Starting ServiceM8 client sync...');
 
-        $service = app(\App\Services\ServiceM8\ServiceM8Service::class); // adjust to your actual service class/binding
+        $baseUrl =rtrim(config('servicem8.base_url'), '/'); // adjust to your actual config key
+        $apiKey  =  config('servicem8.api_key');  // adjust to your actual config key
 
         $cursor   = '-1';
         $inserted = 0;
@@ -26,24 +28,28 @@ class SyncServiceM8Clients extends Command
         do {
             $page++;
 
-            try {
-                $result = $service->getClients([
-                    'cursor' => $cursor,
+            $response = Http::withHeaders([
+                'X-API-Key' => $apiKey,
+            ])->get("{$baseUrl}/company.json", [
+                'cursor' => $cursor,
+            ]);
+
+            if ($response->failed()) {
+                Log::error('ServiceM8 sync failed on page ' . $page, [
+                    'status' => $response->status(),
+                    'body'   => $response->body(),
                 ]);
-                
-            } catch (\Throwable $e) {
-                Log::error('ServiceM8 sync failed on page ' . $page . ': ' . $e->getMessage());
-                $this->error('Failed to fetch clients: ' . $e->getMessage());
+                $this->error("Failed to fetch clients on page {$page}: HTTP {$response->status()}");
                 return Command::FAILURE;
             }
 
-            $clients = $result ?? [];
+            $clients = $response->json() ?? [];
             
             foreach ($clients as $client) {
                 $uuid = $client['uuid'] ?? null;
 
                 if (!$uuid) {
-                    continue; // skip malformed records with no uuid
+                    continue;
                 }
 
                 $affected = DB::table('servicem8_clients')->insertOrIgnore([
@@ -69,17 +75,13 @@ class SyncServiceM8Clients extends Command
                     'updated_at'        => now(),
                 ]);
 
-                if ($affected > 0) {
-                    $inserted++;
-                } else {
-                    $skipped++;
-                }
+                $affected > 0 ? $inserted++ : $skipped++;
             }
 
-            $this->line("Page {$page}: processed " . count($clients) . " records.");
+            $this->line("Page {$page}: fetched " . count($clients) . " records. Next cursor: " . ($response->header('x-next-cursor') ?: 'NONE'));
 
-            $cursor = $result['headers']['x-next-cursor'][0] ?? null;
-
+            $cursor = $response->header('x-next-cursor') ?: null;
+            
         } while (!empty($cursor));
 
         $this->info("Sync complete. Inserted: {$inserted}, Skipped (already existed): {$skipped}");
